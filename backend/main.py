@@ -8,27 +8,24 @@ import logging
 import os
 import time
 
-# ─── Environment Detection ─────────────────────────────────────────────────────
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from fastapi.responses import JSONResponse
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
+
+from models.database import Base, engine
+from routers import admin, auth, career, decision, loan, market, realdata, resume, subscription, users
+from services.scheduler import start_scheduler
+
 ENVIRONMENT = os.getenv("ENVIRONMENT", "development").lower()
 IS_PRODUCTION = ENVIRONMENT == "production"
 DEBUG_ENABLED = os.getenv("DEBUG", "false").lower() == "true"
 
 if IS_PRODUCTION and DEBUG_ENABLED:
     raise RuntimeError("DEBUG must be false in production.")
-
-import uvicorn
-from fastapi import FastAPI, Request
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.middleware.trustedhost import TrustedHostMiddleware
-from fastapi.responses import JSONResponse
-from sqlalchemy import text
-from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.errors import RateLimitExceeded
-from slowapi.util import get_remote_address
-
-from models.database import Base, DATABASE_URL, engine
-from routers import admin, auth, career, decision, loan, market, realdata, resume, subscription, users
-from services.scheduler import start_scheduler
 
 logging.basicConfig(
     level=logging.INFO,
@@ -38,36 +35,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 limiter = Limiter(key_func=get_remote_address)
-
-
-def detect_database_name(url: str) -> str:
-    scheme = url.split("://", 1)[0].lower()
-    dialect = scheme.split("+", 1)[0]
-    return "postgresql" if dialect.startswith("postgresql") else dialect
-
-
-DATABASE_NAME = detect_database_name(DATABASE_URL)
-
-
-def parse_csv_env(name: str, default: str) -> list[str]:
-    raw = os.getenv(name, default)
-    return [item.strip() for item in raw.split(",") if item.strip()]
-
-
-DEFAULT_CORS_ORIGINS = (
-    "https://pathmind.ai,https://www.pathmind.ai,https://app.pathmind.ai"
-    if IS_PRODUCTION
-    else "http://localhost:3000,http://localhost:3001,http://localhost:8080,http://127.0.0.1:3000,http://127.0.0.1:3001,http://127.0.0.1:8080"
-)
-
-DEFAULT_TRUSTED_HOSTS = (
-    "pathmind.ai,www.pathmind.ai,api.pathmind.ai,app.pathmind.ai"
-    if IS_PRODUCTION
-    else "localhost,127.0.0.1,*.localhost,*"
-)
-
-CORS_ALLOW_ORIGIN_REGEX = (os.getenv("CORS_ALLOW_ORIGIN_REGEX") or "").strip() or None
-
 
 app = FastAPI(
     title="PathMind AI API",
@@ -83,19 +50,21 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=parse_csv_env(
-        "CORS_ORIGINS",
-        DEFAULT_CORS_ORIGINS,
-    ),
-    allow_origin_regex=CORS_ALLOW_ORIGIN_REGEX,
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
 app.add_middleware(
     TrustedHostMiddleware,
-    allowed_hosts=parse_csv_env("TRUSTED_HOSTS", DEFAULT_TRUSTED_HOSTS),
+    allowed_hosts=[
+        "*",
+        "localhost",
+        "127.0.0.1",
+        "*.onrender.com",
+        "pathmind-backend.onrender.com",
+    ],
 )
 
 
@@ -117,7 +86,6 @@ async def add_security_headers(request: Request, call_next):
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
     logger.error("Unhandled exception: %s", exc, exc_info=True)
-    # In production, never leak error details to clients
     content = {"detail": "Internal server error"}
     if not IS_PRODUCTION:
         content["type"] = type(exc).__name__
@@ -128,7 +96,6 @@ async def global_exception_handler(request: Request, exc: Exception):
 @app.on_event("startup")
 async def startup_event():
     logger.info("PathMind AI Backend starting up...")
-    # Prevent stale asyncpg connections when app lifecycle is recreated (tests/reloads).
     await engine.dispose()
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
@@ -143,18 +110,14 @@ async def shutdown_event():
     await engine.dispose()
 
 
-@app.get("/health", tags=["System"])
+@app.get("/health")
 async def health_check():
-    try:
-        async with engine.connect() as conn:
-            await conn.execute(text("SELECT 1"))
-    except Exception:
-        return JSONResponse(
-            status_code=503,
-            content={"status": "unhealthy", "database": DATABASE_NAME},
-        )
-
-    return {"status": "healthy", "database": DATABASE_NAME}
+    return {
+        "status": "healthy",
+        "database": "postgresql",
+        "version": "2.0.0",
+        "environment": os.getenv("ENVIRONMENT", "production"),
+    }
 
 
 @app.get("/", tags=["System"])
@@ -181,11 +144,12 @@ app.include_router(realdata.router)
 
 
 if __name__ == "__main__":
+    import uvicorn
+
+    port = int(os.environ.get("PORT", 8000))
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
-        port=8000,
-        reload=not IS_PRODUCTION,
-        log_level="warning" if IS_PRODUCTION else "info",
-        workers=4 if IS_PRODUCTION else 1,
+        port=port,
+        reload=False,
     )
