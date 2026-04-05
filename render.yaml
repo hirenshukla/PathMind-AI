@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: pathmind-backend
+    env: python
+    rootDir: backend
+    plan: free
+    autoDeploy: true
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: false
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET_KEY
+        sync: false
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 60
+      - key: REFRESH_TOKEN_EXPIRE_DAYS
+        value: 30
+      - key: CORS_ORIGINS
+        sync: false
+      - key: CORS_ALLOW_ORIGIN_REGEX
+        sync: false
+      - key: TRUSTED_HOSTS
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: DATA_GOV_IN_API_KEY
+        sync: false

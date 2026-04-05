@@ -1,0 +1,84 @@
+# ========================
+# PathMind AI — .gitignore
+# ========================
+
+# ─── Environment & Secrets ─────────────────────────────────
+.env
+.env.local
+.env.production
+.env.development
+deployment/.env
+backend/.env
+frontend/.env.local
+frontend/.env.production
+frontend/.env.development
+
+# ─── Python ────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+*.whl
+*.pyo
+
+# ─── Virtual Environments ─────────────────────────────────
+.venv/
+venv/
+backend/venv/
+
+# ─── Databases ─────────────────────────────────────────────
+*.db
+*.sqlite3
+
+# ─── Node.js / Next.js ────────────────────────────────────
+node_modules/
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.npm-cache/
+.next/
+
+# ─── IDE & Editors ────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ─── Logs & Temp ──────────────────────────────────────────
+*.log
+logs/
+backend/backend_run.log
+
+# ─── Testing ──────────────────────────────────────────────
+.pytest_cache/
+pytest-cache-files-*/
+htmlcov/
+.coverage
+coverage.xml
+
+# ─── ML Models (large binary files) ───────────────────────
+backend/ml_models/saved_models/*.joblib
+
+# ─── Docker ────────────────────────────────────────────────
+docker-compose.override.yml
+
+# ─── OS Files ──────────────────────────────────────────────
+.DS_Store
+Desktop.ini
+Thumbs.db
+
+# ─── Stray / Generated Directories ────────────────────────
+{backend/
+database/__pycache__/
+backend/__pycache__/
+
+# ─── Gemini / AI Agent Files ──────────────────────────────
+.gemini/
+.agents/
+.agent/
+_agents/
+_agent/

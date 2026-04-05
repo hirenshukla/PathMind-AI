@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PathMind AI - Career & Life Decision Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 1200px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .section ul {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            padding: 8px 0;
+            color: #555;
+            display: flex;
+            align-items: center;
+        }
+
+        .section li:before {
+            content: "✓";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .status {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #0c5aa0;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 PathMind AI</h1>
+            <p>India's #1 AI-powered Career & Life Decision Platform</p>
+        </div>
+
+        <div class="content">
+            <!-- Left Column -->
+            <div>
+                <div class="status" id="apiStatus">
+                    🔄 Checking API Status...
+                </div>
+
+                <div class="section">
+                    <h2>🎯 Features</h2>
+                    <ul>
+                        <li>Career Path Prediction</li>
+                        <li>Life Decision AI Analysis</li>
+                        <li>Resume NLP Processing</li>
+                        <li>Job Market Intelligence</li>
+                        <li>Loan Eligibility Check</li>
+                        <li>Government Sector Guidance</li>
+                    </ul>
+
+                    <div class="info-box">
+                        <strong>💡 Tip:</strong> Use API documentation to explore all endpoints and test them interactively.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div>
+                <div class="section">
+                    <h2>🚀 Getting Started</h2>
+                    <p style="color: #555; margin-bottom: 15px;">
+                        Your PathMind AI backend is running and ready to serve API requests. Explore the documentation and start building with our powerful AI APIs.
+                    </p>
+
+                    <div class="button-group">
+                        <a href="http://localhost:8000/api/docs" class="btn btn-primary" target="_blank">
+                            📚 API Documentation (Swagger)
+                        </a>
+                        <a href="http://localhost:8000/api/redoc" class="btn btn-secondary" target="_blank">
+                            📖 API Reference (ReDoc)
+                        </a>
+                        <a href="http://localhost:8000/health" class="btn btn-secondary" target="_blank">
+                            ❤️ Health Check
+                        </a>
+                    </div>
+
+                    <div class="info-box" style="margin-top: 20px;">
+                        <strong>📝 Subscription Status:</strong><br>
+                        <span id="subStatus">Loading...</span>
+                    </div>
+                </div>
+
+                <div class="section" style="margin-top: 20px;">
+                    <h2>⚙️ System Info</h2>
+                    <ul style="font-size: 0.9em;">
+                        <li>Backend: FastAPI v0.111.0</li>
+                        <li>Database: SQLite (pathmind.db)</li>
+                        <li>Port: 8000</li>
+                        <li>Auth: JWT Token-based</li>
+                        <li>Payment: Disabled (Test Mode)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2026 PathMind AI | All Rights Reserved</p>
+            <p>Helping India make smarter career and life decisions through AI</p>
+        </div>
+    </div>
+
+    <script>
+        // Check API health status
+        async function checkApiStatus() {
+            try {
+                const response = await fetch('http://localhost:8000/health');
+                const data = await response.json();
+                
+                const statusEl = document.getElementById('apiStatus');
+                statusEl.innerHTML = '✅ API Status: <strong>ONLINE</strong>';
+                statusEl.classList.remove('error');
+                
+                // Check subscription plans
+                checkSubscription();
+            } catch (error) {
+                const statusEl = document.getElementById('apiStatus');
+                statusEl.innerHTML = '❌ API Status: <strong>OFFLINE</strong>';
+                statusEl.classList.add('error');
+                console.error('API Error:', error);
+            }
+        }
+
+        async function checkSubscription() {
+            try {
+                const response = await fetch('http://localhost:8000/api/v1/subscription/plans');
+                const data = await response.json();
+                
+                const subStatus = document.getElementById('subStatus');
+                if (data.plans) {
+                    const freePlan = data.plans.find(p => p.plan === 'free');
+                    subStatus.innerHTML = `<strong>Free Plan:</strong> ${freePlan.predictions_limit} free predictions/month`;
+                }
+            } catch (error) {
+                document.getElementById('subStatus').innerHTML = 'Unable to load plans';
+            }
+        }
+
+        // Check status on page load
+        window.addEventListener('load', checkApiStatus);
+        
+        // Re-check every 30 seconds
+        setInterval(checkApiStatus, 30000);
+    </script>
+</body>
+</html>

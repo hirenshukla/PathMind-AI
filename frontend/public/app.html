@@ -1,0 +1,2809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PathMind AI — India's #1 Career & Life Decision Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{
+  --ink:#0c0c14;
+  --ink2:#13131e;
+  --ink3:#1c1c2e;
+  --surface:#191927;
+  --card:#1e1e30;
+  --card2:#252538;
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.13);
+  --border3:rgba(255,255,255,0.2);
+  --violet:#7c6fef;
+  --violet2:#a89fff;
+  --emerald:#2ecc71;
+  --emerald2:#55efc4;
+  --amber:#f39c12;
+  --amber2:#fdcb6e;
+  --rose:#e74c3c;
+  --rose2:#fd79a8;
+  --sky:#3498db;
+  --sky2:#74b9ff;
+  --saffron:#ff8c00;
+  --saffron2:#ffa940;
+  --navy:#1a237e;
+  --text:#e8e8f0;
+  --muted:#7070a0;
+  --muted2:#4a4a70;
+  --r:14px;--r2:10px;--r3:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Cabinet Grotesk',sans-serif;background:var(--ink);color:var(--text);overflow-x:hidden;min-height:100vh;}
+h1,h2,h3,h4,h5{font-family:'Clash Display',sans-serif;letter-spacing:-0.02em;}
+code,pre,.mono{font-family:'JetBrains Mono',monospace;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--ink2);}
+::-webkit-scrollbar-thumb{background:var(--muted2);border-radius:3px;}
+
+/* ═══ ANIMATED BG PARTICLES ═══ */
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden;}
+.particle{position:absolute;border-radius:50%;animation:floatUp linear infinite;opacity:0;}
+@keyframes floatUp{0%{transform:translateY(100vh) scale(0);opacity:0;}10%{opacity:1;}90%{opacity:0.6;}100%{transform:translateY(-20px) scale(1);opacity:0;}}
+
+/* ═══ NAV ═══ */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:rgba(12,12,20,0.8);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Clash Display',sans-serif;font-size:24px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;}
+.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--violet),var(--emerald));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.logo-text{background:linear-gradient(90deg,var(--violet2),var(--emerald2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nav-center{display:flex;gap:4px;}
+.nav-pill{background:none;border:none;color:var(--muted);padding:8px 16px;border-radius:40px;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;font-size:14px;font-weight:500;transition:all 0.2s;}
+.nav-pill:hover,.nav-pill.active{background:rgba(124,111,239,0.15);color:var(--violet2);}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.btn{padding:9px 20px;border-radius:40px;font-family:'Cabinet Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;border:none;}
+.btn-ghost{background:none;border:1px solid var(--border2);color:var(--muted);}
+.btn-ghost:hover{border-color:var(--violet);color:var(--text);}
+.btn-primary{background:linear-gradient(135deg,var(--violet),#6c5ce7);color:#fff;box-shadow:0 0 24px rgba(124,111,239,0.3);}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 0 40px rgba(124,111,239,0.5);}
+.nav-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--emerald));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;cursor:pointer;display:none;}
+
+/* ═══ PAGES ═══ */
+.page{display:none;min-height:100vh;position:relative;z-index:1;}
+.page.active{display:block;}
+
+/* ════════════════════════════════════════
+   LANDING PAGE
+════════════════════════════════════════ */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 20px 80px;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;z-index:0;}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(100px);animation:orbPulse 8s ease-in-out infinite;}
+.orb1{width:600px;height:600px;background:rgba(124,111,239,0.18);top:-20%;left:-10%;animation-delay:0s;}
+.orb2{width:500px;height:500px;background:rgba(46,204,113,0.12);bottom:-10%;right:-5%;animation-delay:-3s;}
+.orb3{width:400px;height:400px;background:rgba(255,140,0,0.08);top:40%;left:40%;animation-delay:-5s;}
+@keyframes orbPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+
+.hero-grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(124,111,239,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(124,111,239,0.05) 1px,transparent 1px);background-size:50px 50px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent);}
+
+.hero-content{position:relative;z-index:2;max-width:900px;}
+.flag-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(255,140,0,0.12);border:1px solid rgba(255,140,0,0.3);color:var(--saffron2);padding:8px 20px;border-radius:40px;font-size:13px;font-weight:600;margin-bottom:28px;animation:fadeUp 0.6s ease both;}
+.flag-badge .flag{font-size:18px;}
+
+.hero h1{font-size:clamp(44px,7.5vw,86px);font-weight:700;line-height:1.0;margin-bottom:20px;animation:fadeUp 0.6s 0.1s ease both;}
+.hero h1 .grad1{background:linear-gradient(135deg,#fff 0%,var(--violet2) 50%,var(--emerald2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero h1 .grad2{background:linear-gradient(135deg,var(--saffron),var(--amber2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+.hero-sub{font-size:19px;color:var(--muted);line-height:1.7;max-width:640px;margin:0 auto 40px;animation:fadeUp 0.6s 0.2s ease both;font-weight:400;}
+
+.hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp 0.6s 0.3s ease both;}
+.cta-big{padding:16px 40px;border-radius:50px;font-size:17px;font-weight:700;cursor:pointer;transition:all 0.3s;font-family:'Cabinet Grotesk',sans-serif;border:none;}
+.cta-main{background:linear-gradient(135deg,var(--violet),#6c5ce7);color:#fff;box-shadow:0 8px 40px rgba(124,111,239,0.4);}
+.cta-main:hover{transform:translateY(-3px);box-shadow:0 16px 60px rgba(124,111,239,0.6);}
+.cta-sec{background:rgba(255,255,255,0.05);border:1px solid var(--border2);color:var(--text);}
+.cta-sec:hover{background:rgba(255,255,255,0.1);border-color:var(--border3);}
+
+/* STATS ROW */
+.hero-stats{display:flex;gap:48px;justify-content:center;flex-wrap:wrap;margin-top:64px;padding-top:48px;border-top:1px solid var(--border);animation:fadeUp 0.6s 0.5s ease both;}
+.hero-stat .num{font-family:'Clash Display',sans-serif;font-size:36px;font-weight:700;background:linear-gradient(135deg,var(--violet2),var(--emerald2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-stat .lbl{font-size:13px;color:var(--muted);margin-top:4px;}
+
+/* SECTOR SHOWCASE */
+.section-block{padding:80px 40px;max-width:1300px;margin:0 auto;}
+.section-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(124,111,239,0.1);border:1px solid rgba(124,111,239,0.25);color:var(--violet2);padding:6px 16px;border-radius:40px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;}
+.section-block h2{font-size:clamp(32px,4vw,52px);margin-bottom:12px;line-height:1.1;}
+.section-block .sub{color:var(--muted);font-size:17px;max-width:600px;line-height:1.6;margin-bottom:48px;}
+
+/* FEATURE TILES */
+.features-masonry{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.ftile{border-radius:var(--r3);padding:32px;border:1px solid var(--border);transition:all 0.3s;position:relative;overflow:hidden;cursor:pointer;}
+.ftile::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.3s;}
+.ftile:hover{transform:translateY(-4px);border-color:var(--border2);}
+.ftile:hover::before{opacity:1;}
+.ftile-violet{background:linear-gradient(135deg,rgba(124,111,239,0.12),rgba(124,111,239,0.04));}
+.ftile-violet::before{background:linear-gradient(135deg,rgba(124,111,239,0.15),transparent);}
+.ftile-emerald{background:linear-gradient(135deg,rgba(46,204,113,0.12),rgba(46,204,113,0.04));}
+.ftile-emerald::before{background:linear-gradient(135deg,rgba(46,204,113,0.15),transparent);}
+.ftile-amber{background:linear-gradient(135deg,rgba(243,156,18,0.12),rgba(243,156,18,0.04));}
+.ftile-amber::before{background:linear-gradient(135deg,rgba(243,156,18,0.15),transparent);}
+.ftile-rose{background:linear-gradient(135deg,rgba(231,76,60,0.12),rgba(231,76,60,0.04));}
+.ftile-rose::before{background:linear-gradient(135deg,rgba(231,76,60,0.15),transparent);}
+.ftile-sky{background:linear-gradient(135deg,rgba(52,152,219,0.12),rgba(52,152,219,0.04));}
+.ftile-sky::before{background:linear-gradient(135deg,rgba(52,152,219,0.15),transparent);}
+.ftile-saffron{background:linear-gradient(135deg,rgba(255,140,0,0.12),rgba(255,140,0,0.04));}
+.ftile-saffron::before{background:linear-gradient(135deg,rgba(255,140,0,0.15),transparent);}
+.ftile-big{grid-column:span 2;}
+.tile-icon{font-size:32px;margin-bottom:16px;}
+.tile-title{font-size:20px;font-weight:600;margin-bottom:8px;}
+.tile-desc{font-size:14px;color:var(--muted);line-height:1.6;}
+.tile-tag{display:inline-block;background:rgba(255,255,255,0.08);padding:3px 10px;border-radius:20px;font-size:11px;color:var(--muted);margin-top:12px;}
+
+/* SECTOR TABS */
+.sector-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px;}
+.stab{padding:9px 20px;border-radius:40px;border:1px solid var(--border2);background:none;color:var(--muted);cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;font-size:14px;font-weight:500;transition:all 0.2s;}
+.stab.active,.stab:hover{background:var(--violet);border-color:var(--violet);color:#fff;}
+.sector-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;}
+.sector-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;cursor:pointer;transition:all 0.25s;display:flex;flex-direction:column;gap:10px;}
+.sector-card:hover{border-color:var(--violet);background:rgba(124,111,239,0.08);}
+.sc-icon{font-size:28px;}
+.sc-name{font-weight:600;font-size:15px;}
+.sc-count{font-size:12px;color:var(--muted);}
+.sc-tag{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500;width:fit-content;}
+.gov-tag{background:rgba(255,140,0,0.15);color:var(--saffron2);}
+.pvt-tag{background:rgba(52,152,219,0.15);color:var(--sky2);}
+.stu-tag{background:rgba(46,204,113,0.15);color:var(--emerald2);}
+
+/* TESTIMONIALS */
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.tcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r3);padding:28px;}
+.tcard-quote{font-size:15px;color:var(--text);line-height:1.7;margin-bottom:20px;font-style:italic;}
+.tcard-author{display:flex;align-items:center;gap:12px;}
+.tcard-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;}
+.tcard-name{font-weight:600;font-size:14px;}
+.tcard-role{font-size:12px;color:var(--muted);}
+
+/* ════════════════════════════════════════
+   AUTH
+════════════════════════════════════════ */
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 20px 40px;position:relative;}
+.auth-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(124,111,239,0.08),transparent);}
+.auth-card{background:var(--card);border:1px solid var(--border2);border-radius:24px;padding:44px;width:100%;max-width:480px;position:relative;z-index:1;animation:fadeUp 0.4s ease;}
+.auth-title{font-size:30px;font-weight:700;margin-bottom:6px;}
+.auth-sub{color:var(--muted);font-size:15px;margin-bottom:32px;}
+.fgroup{margin-bottom:18px;}
+.flabel{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:7px;text-transform:uppercase;letter-spacing:0.6px;}
+.finput{width:100%;background:var(--ink3);border:1px solid var(--border2);color:var(--text);padding:13px 16px;border-radius:var(--r2);font-family:'Cabinet Grotesk',sans-serif;font-size:15px;transition:all 0.2s;outline:none;}
+.finput:focus{border-color:var(--violet);background:rgba(124,111,239,0.05);}
+.finput::placeholder{color:var(--muted2);}
+select.finput option{background:var(--ink3);}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.fsubmit{width:100%;padding:15px;background:linear-gradient(135deg,var(--violet),#6c5ce7);color:#fff;border:none;border-radius:var(--r);font-family:'Clash Display',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all 0.25s;margin-top:6px;letter-spacing:0.3px;}
+.fsubmit:hover{opacity:0.9;transform:translateY(-1px);}
+.auth-link{text-align:center;margin-top:20px;color:var(--muted);font-size:14px;}
+.auth-link span{color:var(--violet2);cursor:pointer;font-weight:500;}
+.auth-link span:hover{text-decoration:underline;}
+.demo-btn{width:100%;padding:13px;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.3);color:var(--emerald2);border-radius:var(--r);font-family:'Cabinet Grotesk',sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:10px;transition:all 0.2s;}
+.demo-btn:hover{background:rgba(46,204,113,0.2);}
+
+/* ════════════════════════════════════════
+   DASHBOARD
+════════════════════════════════════════ */
+.dash{display:flex;min-height:100vh;padding-top:72px;}
+.sidebar{width:268px;flex-shrink:0;background:var(--ink2);border-right:1px solid var(--border);padding:24px 14px;position:sticky;top:72px;height:calc(100vh - 72px);overflow-y:auto;display:flex;flex-direction:column;gap:4px;}
+.sidebar-sep{height:1px;background:var(--border);margin:12px 4px;}
+.sidebar-label{font-size:11px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:1px;padding:0 12px;margin:8px 0 4px;}
+.sitem{display:flex;align-items:center;gap:11px;padding:11px 14px;border-radius:var(--r2);cursor:pointer;transition:all 0.18s;color:var(--muted);font-size:14px;font-weight:500;border:1px solid transparent;}
+.sitem:hover{background:rgba(255,255,255,0.04);color:var(--text);}
+.sitem.active{background:linear-gradient(135deg,rgba(124,111,239,0.2),rgba(124,111,239,0.08));color:var(--violet2);border-color:rgba(124,111,239,0.2);}
+.sitem-icon{font-size:17px;width:20px;text-align:center;}
+.sitem-badge{margin-left:auto;background:var(--violet);color:#fff;border-radius:20px;font-size:10px;padding:2px 7px;font-weight:700;}
+
+.dcontent{flex:1;padding:36px 40px;overflow-y:auto;min-width:0;}
+.sec{display:none;}
+.sec.active{display:block;}
+.sec-header{margin-bottom:28px;}
+.sec-header h2{font-size:26px;font-weight:700;margin-bottom:5px;}
+.sec-header p{color:var(--muted);font-size:14px;}
+
+/* STATS */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:28px;}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px;position:relative;overflow:hidden;}
+.kpi::after{content:'';position:absolute;top:0;right:0;width:80px;height:80px;border-radius:50%;filter:blur(40px);opacity:0.3;}
+.kpi-v .kpi::after{background:var(--violet);}
+.kpi-e::after{background:var(--emerald);}
+.kpi-a::after{background:var(--amber);}
+.kpi-r::after{background:var(--rose);}
+.kpi-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;font-weight:600;}
+.kpi-value{font-family:'Clash Display',sans-serif;font-size:26px;font-weight:700;}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:4px;}
+.kpi-up{color:var(--emerald);}
+.kpi-down{color:var(--rose);}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:26px;margin-bottom:18px;}
+.card h3{font-size:17px;font-weight:600;margin-bottom:16px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+
+/* TAGS & BADGES */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:40px;font-size:12px;font-weight:600;}
+.b-high{background:rgba(46,204,113,0.15);color:var(--emerald2);border:1px solid rgba(46,204,113,0.25);}
+.b-med{background:rgba(243,156,18,0.15);color:var(--amber2);border:1px solid rgba(243,156,18,0.25);}
+.b-low{background:rgba(231,76,60,0.15);color:var(--rose2);border:1px solid rgba(231,76,60,0.25);}
+.b-gov{background:rgba(255,140,0,0.15);color:var(--saffron2);border:1px solid rgba(255,140,0,0.25);}
+.b-pvt{background:rgba(52,152,219,0.15);color:var(--sky2);border:1px solid rgba(52,152,219,0.25);}
+.b-stu{background:rgba(46,204,113,0.15);color:var(--emerald2);border:1px solid rgba(46,204,113,0.25);}
+.b-violet{background:rgba(124,111,239,0.15);color:var(--violet2);border:1px solid rgba(124,111,239,0.25);}
+.b-loan{background:rgba(253,121,168,0.15);color:var(--rose2);border:1px solid rgba(253,121,168,0.25);}
+
+/* SKILLS */
+.skill-row{display:flex;gap:10px;margin-bottom:10px;}
+.skill-row input{flex:1;}
+.add-skill-btn{background:rgba(124,111,239,0.15);border:1px solid rgba(124,111,239,0.3);color:var(--violet2);padding:0 18px;border-radius:var(--r2);cursor:pointer;font-size:22px;transition:all 0.2s;font-family:inherit;}
+.add-skill-btn:hover{background:rgba(124,111,239,0.3);}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;}
+.stag{background:rgba(124,111,239,0.12);border:1px solid rgba(124,111,239,0.25);color:var(--violet2);padding:5px 13px;border-radius:40px;font-size:13px;display:flex;align-items:center;gap:6px;}
+.stag .x{cursor:pointer;opacity:0.6;font-size:12px;transition:opacity 0.2s;}
+.stag .x:hover{opacity:1;}
+
+/* SLIDERS */
+.sl-wrap{margin-bottom:20px;}
+.sl-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:14px;}
+.sl-val{font-family:'Clash Display',sans-serif;font-weight:700;font-size:20px;color:var(--violet2);}
+input[type=range]{-webkit-appearance:none;width:100%;height:5px;background:var(--ink3);border-radius:5px;outline:none;padding:0;border:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;background:linear-gradient(135deg,var(--violet),var(--emerald));border-radius:50%;cursor:pointer;transition:transform 0.2s;box-shadow:0 0 10px rgba(124,111,239,0.4);}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);}
+.sl-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted2);margin-top:5px;}
+
+/* TEXTAREA */
+textarea.finput{resize:vertical;min-height:90px;line-height:1.6;}
+
+/* SUBMIT BTN */
+.submit{width:100%;padding:15px;background:linear-gradient(135deg,var(--violet),#6c5ce7);color:#fff;border:none;border-radius:var(--r);font-family:'Clash Display',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all 0.25s;margin-top:12px;}
+.submit:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(124,111,239,0.4);}
+.submit-emerald{background:linear-gradient(135deg,#0f9b58,var(--emerald));}
+.submit-amber{background:linear-gradient(135deg,#c87d00,var(--amber));color:#1a1000;}
+.submit-sky{background:linear-gradient(135deg,#1668b5,var(--sky));}
+.submit-rose{background:linear-gradient(135deg,#b71c1c,var(--rose));}
+.submit-saffron{background:linear-gradient(135deg,#b35900,var(--saffron));}
+
+/* AI RESULT */
+.result-glow{background:linear-gradient(135deg,rgba(124,111,239,0.1),rgba(46,204,113,0.06));border:1px solid rgba(124,111,239,0.25);border-radius:var(--r3);padding:32px;margin-top:22px;animation:fadeUp 0.4s ease;}
+.rh{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:22px;}
+.rtitle{font-size:22px;font-weight:700;}
+.rconf{background:rgba(46,204,113,0.15);border:1px solid rgba(46,204,113,0.3);color:var(--emerald2);padding:8px 18px;border-radius:40px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px;}
+.rexplain{background:rgba(255,255,255,0.03);border-radius:var(--r2);padding:16px;color:var(--muted);line-height:1.8;font-size:15px;margin-bottom:20px;}
+.rstep{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+.rstep:last-child{border-bottom:none;}
+.rstep-n{min-width:30px;height:30px;background:rgba(124,111,239,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--violet2);}
+.rstep-t{font-size:14px;color:var(--muted);line-height:1.6;padding-top:5px;}
+
+/* CAREER CARD */
+.cpath-cards{display:grid;gap:14px;margin-top:20px;}
+.cpath-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start;cursor:pointer;transition:all 0.25s;animation:fadeUp 0.4s ease both;}
+.cpath-card:hover{border-color:var(--violet);transform:translateX(4px);box-shadow:0 4px 30px rgba(124,111,239,0.1);}
+.cp-rank{font-family:'Clash Display',sans-serif;font-size:44px;font-weight:700;color:var(--border2);line-height:1;margin-bottom:6px;}
+.cp-title{font-size:19px;font-weight:700;margin-bottom:8px;}
+.cp-meta{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px;}
+.cp-desc{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:12px;}
+.gap-items{display:flex;flex-wrap:wrap;gap:6px;}
+.gap-item{background:rgba(231,76,60,0.1);border:1px solid rgba(231,76,60,0.2);color:var(--rose2);padding:3px 10px;border-radius:20px;font-size:12px;}
+.cp-score{text-align:right;}
+.cp-pct{font-family:'Clash Display',sans-serif;font-size:40px;font-weight:700;color:var(--violet2);line-height:1;}
+.cp-plbl{font-size:11px;color:var(--muted);margin-top:2px;}
+.pbar{height:5px;background:var(--ink3);border-radius:3px;overflow:hidden;margin-top:8px;width:90px;}
+.pfill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--violet),var(--emerald));transition:width 1.2s ease;}
+
+/* CHART */
+.chart-box{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:18px;}
+.chart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:8px;}
+.chart-head h3{font-size:16px;font-weight:600;}
+.csubhead{font-size:12px;color:var(--muted);}
+.chw{position:relative;height:260px;}
+
+/* LOAN RESULT */
+.loan-result{background:linear-gradient(135deg,rgba(253,121,168,0.08),rgba(124,111,239,0.06));border:1px solid rgba(253,121,168,0.2);border-radius:var(--r3);padding:32px;margin-top:22px;animation:fadeUp 0.4s ease;}
+.loan-meter{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;margin:24px 0;}
+.meter-ring{width:140px;height:140px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;}
+.meter-bg{position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--violet) 0%,var(--emerald) 60%,var(--ink3) 60%);mask:radial-gradient(farthest-side,transparent 65%,black 65%);}
+.meter-val{font-family:'Clash Display',sans-serif;font-size:32px;font-weight:700;color:var(--text);z-index:1;}
+.meter-lbl{font-size:12px;color:var(--muted);}
+.loan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px;}
+.lkpi{background:rgba(255,255,255,0.03);border-radius:var(--r2);padding:16px;text-align:center;}
+.lkpi-v{font-family:'Clash Display',sans-serif;font-size:22px;font-weight:700;color:var(--violet2);}
+.lkpi-l{font-size:12px;color:var(--muted);margin-top:4px;}
+
+/* STUDENT */
+.scheme-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+.scheme-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px;cursor:pointer;transition:all 0.25s;}
+.scheme-card:hover{border-color:var(--emerald);transform:translateY(-2px);}
+.sc2-icon{font-size:26px;margin-bottom:12px;}
+.sc2-title{font-size:16px;font-weight:700;margin-bottom:6px;}
+.sc2-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px;}
+.sc2-meta{display:flex;flex-wrap:wrap;gap:6px;}
+
+/* GOVT EXAM */
+.exam-table{width:100%;border-collapse:collapse;}
+.exam-table th{text-align:left;font-size:11px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:0.5px;padding:10px 14px;border-bottom:1px solid var(--border);}
+.exam-table td{padding:13px 14px;border-bottom:1px solid var(--border);font-size:14px;}
+.exam-table tr:last-child td{border-bottom:none;}
+.exam-table tr:hover td{background:rgba(255,255,255,0.02);}
+
+/* HISTORY */
+.hist-item{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:16px 20px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:border-color 0.2s;}
+.hist-item:hover{border-color:var(--violet);}
+.hist-type{font-size:11px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;}
+.hist-title{font-weight:600;font-size:15px;}
+.hist-date{font-size:12px;color:var(--muted2);}
+
+/* LOADING */
+.loading{display:none;flex-direction:column;align-items:center;justify-content:center;padding:56px 20px;gap:18px;}
+.loading.on{display:flex;}
+.spin{width:44px;height:44px;border:3px solid var(--border2);border-top-color:var(--violet);border-radius:50%;animation:spin 0.7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-msg{color:var(--muted);font-size:14px;}
+
+/* CHAT */
+.chatbtn{position:fixed;bottom:28px;right:28px;z-index:300;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--emerald));border:none;cursor:pointer;font-size:26px;box-shadow:0 8px 32px rgba(124,111,239,0.5);transition:all 0.3s;display:none;align-items:center;justify-content:center;}
+.chatbtn.on{display:flex;}
+.chatbtn:hover{transform:scale(1.12);box-shadow:0 12px 48px rgba(124,111,239,0.7);}
+.chatpanel{position:fixed;bottom:100px;right:28px;z-index:300;width:380px;height:520px;background:var(--card);border:1px solid var(--border2);border-radius:22px;display:none;flex-direction:column;box-shadow:0 24px 80px rgba(0,0,0,0.6);animation:fadeUp 0.3s ease;}
+.chatpanel.on{display:flex;}
+.chatheader{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.chatheader h4{font-size:15px;font-weight:600;}
+.chatclose{background:none;border:none;color:var(--muted);cursor:pointer;font-size:20px;transition:color 0.2s;}
+.chatclose:hover{color:var(--text);}
+.chatlang{background:var(--ink3);color:var(--text);border:1px solid var(--border2);border-radius:8px;padding:2px 8px;font-size:11px;outline:none;}
+.chatmessages{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px;}
+.cmsg{max-width:86%;padding:11px 15px;border-radius:14px;font-size:13px;line-height:1.6;}
+.cmsg-ai{align-self:flex-start;background:var(--ink3);border-bottom-left-radius:4px;}
+.cmsg-u{align-self:flex-end;background:var(--violet);color:#fff;border-bottom-right-radius:4px;}
+.chatinrow{display:flex;gap:9px;padding:14px 18px;border-top:1px solid var(--border);}
+.chatinrow .finput{flex:1;padding:10px 13px;font-size:13px;}
+.chatsend{background:var(--violet);border:none;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:14px;transition:background 0.2s;display:flex;align-items:center;justify-content:center;}
+.chatsend:hover{background:#6c5ce7;}
+
+/* TOAST */
+.toast{position:fixed;top:86px;right:20px;z-index:400;background:var(--card);border:1px solid var(--violet);color:var(--text);padding:13px 20px;border-radius:var(--r2);font-size:14px;font-weight:500;box-shadow:0 8px 32px rgba(0,0,0,0.4);display:none;animation:slideRight 0.3s ease;}
+.toast.on{display:block;}
+
+/* MISC */
+.divider{height:1px;background:var(--border);margin:20px 0;}
+.text-muted{color:var(--muted);}
+.text-v{color:var(--violet2);}
+.text-e{color:var(--emerald2);}
+.text-a{color:var(--amber2);}
+.text-s{color:var(--saffron2);}
+.empty{text-align:center;padding:56px 20px;color:var(--muted);}
+.empty .eicon{font-size:44px;margin-bottom:14px;}
+.trending{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border);}
+.trending:last-child{border-bottom:none;}
+.t-name{font-weight:500;font-size:14px;}
+.t-chg{font-size:13px;color:var(--emerald2);font-weight:600;}
+
+/* QUICK ACTION BTNS */
+.qa-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;}
+.qa-btn{padding:14px 16px;border-radius:var(--r);border:1px solid var(--border2);background:var(--card2);cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;font-size:14px;font-weight:600;transition:all 0.2s;color:var(--text);text-align:left;display:flex;align-items:center;gap:10px;}
+.qa-btn:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.2);}
+.qa-btn .qi{font-size:20px;}
+
+/* ═══ ANIMATIONS ═══ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+@keyframes slideRight{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+
+/* PROFILE COMPLETION */
+.completion-ring{width:100px;height:100px;position:relative;}
+.cring-bg{fill:none;stroke:var(--ink3);stroke-width:8;}
+.cring-fill{fill:none;stroke:url(#ringGrad);stroke-width:8;stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset 1s ease;}
+.cring-text{font-family:'Clash Display',sans-serif;font-size:22px;font-weight:700;fill:var(--text);}
+.cring-sub{font-size:11px;fill:var(--muted);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .features-masonry,.grid2,.grid3,.testimonials{grid-template-columns:1fr!important;}
+  .ftile-big{grid-column:span 1;}
+  .sidebar{display:none;}
+  .dcontent{padding:20px;}
+  nav{padding:14px 20px;}
+  .nav-center{display:none;}
+  .section-block{padding:50px 20px;}
+  .loan-grid{grid-template-columns:1fr 1fr;}
+  .pm-footer{padding:16px!important;}
+  .pm-footer .pm-f1{font-size:12px!important;}
+  .pm-footer .pm-f2{font-size:11px!important;}
+  .pm-footer .pm-f3{font-size:10px!important;}
+}
+</style>
+</head>
+<body>
+
+<!-- PARTICLES -->
+<div id="particles"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="logo" onclick="goHome()">
+    <img src="/logo.png" alt="PathMind AI" width="40" height="40" style="border-radius: 8px; object-fit: contain;" />
+    <span class="logo-text">PathMind AI</span>
+  </div>
+  <div class="nav-center" id="navCenter">
+    <button class="nav-pill" onclick="scrollToSection('features')">Features</button>
+    <button class="nav-pill" onclick="scrollToSection('sectors')">Sectors</button>
+    <button class="nav-pill" onclick="scrollToSection('students')">Students</button>
+    <button class="nav-pill" onclick="scrollToSection('testimonials')">Reviews</button>
+  </div>
+  <div class="nav-right">
+    <div id="guestBtns" style="display:flex;gap:8px;">
+      <button class="btn btn-ghost" onclick="showPage('loginPage')">Sign In</button>
+      <button class="btn btn-primary" onclick="showPage('registerPage')">Get Started Free</button>
+    </div>
+    <div id="userBtns" style="display:none;align-items:center;gap:10px;">
+      <span style="font-size:13px;color:var(--muted)">Hi, <span id="navName" style="color:var(--text);font-weight:600">User</span></span>
+      <div class="nav-avatar" id="navAv" style="display:flex;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--emerald));align-items:center;justify-content:center;font-weight:700;font-size:13px;cursor:pointer;" onclick="showSection('profile')">U</div>
+      <button class="btn btn-ghost" onclick="logout()" style="font-size:13px;padding:7px 14px;">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════ LANDING ═══════════════ -->
+<div id="landingPage" class="page active">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg">
+      <div class="hero-orb orb1"></div>
+      <div class="hero-orb orb2"></div>
+      <div class="hero-orb orb3"></div>
+      <div class="hero-grid-lines"></div>
+    </div>
+    <div class="hero-content">
+      <div class="flag-badge"><span class="flag">🇮🇳</span> India's Most Comprehensive Career Intelligence Platform</div>
+      <h1><span class="grad1">Decode Your Future</span><br><span class="grad2">with AI Precision</span></h1>
+      <p class="hero-sub">Government exams, private sector jobs, student scholarships, education loans — PathMind AI navigates every life decision for India's 1.4 billion people.</p>
+      <div class="hero-cta">
+        <button class="cta-big cta-main" onclick="showPage('registerPage')">🚀 Start Free — No Credit Card</button>
+        <button class="cta-big cta-sec" onclick="demoQuick()">▶ Live Demo</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num">50+</div><div class="lbl">Career Sectors</div></div>
+        <div class="hero-stat"><div class="num">2.8L+</div><div class="lbl">Users Guided</div></div>
+        <div class="hero-stat"><div class="num">94%</div><div class="lbl">Prediction Accuracy</div></div>
+        <div class="hero-stat"><div class="num">₹12L+</div><div class="lbl">Avg Salary Boost</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="section-block" id="features">
+    <div class="section-tag">✦ Core Platform</div>
+    <h2>Everything you need to<br>navigate <span style="color:var(--violet2)">every life decision</span></h2>
+    <p class="sub">From a Class 12 student to a seasoned IAS officer — PathMind AI has a module for every Indian.</p>
+    <div class="features-masonry">
+      <div class="ftile ftile-violet ftile-big" onclick="showPage('registerPage')">
+        <div class="tile-icon">🧠</div>
+        <div class="tile-title" style="font-size:24px;">Life Decision AI Engine</div>
+        <div class="tile-desc" style="font-size:15px;">Tell us your situation — job, salary, goals, stress level. Our hybrid rule-based + LLM engine gives you a ranked recommendation with confidence score, timeline, and step-by-step action plan. Not generic advice. YOUR advice.</div>
+        <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;">
+          <span class="tile-tag">Job Switch</span><span class="tile-tag">Higher Studies</span><span class="tile-tag">Career Pivot</span><span class="tile-tag">Entrepreneurship</span>
+        </div>
+      </div>
+      <div class="ftile ftile-emerald" onclick="showPage('registerPage')">
+        <div class="tile-icon">🎯</div>
+        <div class="tile-title">Career Path Predictor</div>
+        <div class="tile-desc">Upload resume or enter skills. Get top 5 career paths with salary ranges, demand levels, and exact skill gaps to fill.</div>
+        <span class="tile-tag">ML-Powered Matching</span>
+      </div>
+      <div class="ftile ftile-saffron" onclick="showPage('registerPage')">
+        <div class="tile-icon">🏛️</div>
+        <div class="tile-title">Government Sector Guide</div>
+        <div class="tile-desc">UPSC, SSC, Banking, Railways, PSU, Defence — complete exam calendars, eligibility, preparation paths.</div>
+        <span class="tile-tag">50+ Govt Exams</span>
+      </div>
+      <div class="ftile ftile-sky" onclick="showPage('registerPage')">
+        <div class="tile-icon">💼</div>
+        <div class="tile-title">Private Sector Explorer</div>
+        <div class="tile-desc">IT, Finance, Healthcare, E-commerce, Manufacturing — real salary data and growth trajectories.</div>
+        <span class="tile-tag">30+ Industries</span>
+      </div>
+      <div class="ftile ftile-rose" onclick="showPage('registerPage')">
+        <div class="tile-icon">🏦</div>
+        <div class="tile-title">Loan Prediction AI</div>
+        <div class="tile-desc">Education loan, home loan, personal loan — instant eligibility check with EMI calculator and bank recommendations.</div>
+        <span class="tile-tag">6 Loan Types</span>
+      </div>
+      <div class="ftile ftile-amber ftile-big" onclick="showPage('registerPage')">
+        <div class="tile-icon">🎓</div>
+        <div class="tile-title" style="font-size:22px;">Student Complete Package</div>
+        <div class="tile-desc" style="font-size:15px;">From 10th board choices to PhD placements — scholarships, entrance exams, college predictor, JEE/NEET rank estimator, career after 12th, and post-graduation planning all in one place.</div>
+        <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;">
+          <span class="tile-tag">After 10th</span><span class="tile-tag">After 12th</span><span class="tile-tag">Scholarships</span><span class="tile-tag">Entrance Exams</span><span class="tile-tag">College Predictor</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTORS PREVIEW -->
+  <div class="section-block" id="sectors" style="background:rgba(255,255,255,0.01);border-radius:32px;border:1px solid var(--border);">
+    <div class="section-tag">🏛️ Sector Coverage</div>
+    <h2>Government & Private<br><span style="color:var(--saffron2)">All 50+ Sectors Covered</span></h2>
+    <p class="sub">Whether you dream of cracking UPSC or becoming a tech CEO — we have data, guidance, and AI predictions for every path.</p>
+    <div class="sector-tabs" id="homeSectorTabs">
+      <button class="stab active" onclick="filterHomeSecTab('all',this)">All Sectors</button>
+      <button class="stab" onclick="filterHomeSecTab('govt',this)">🏛️ Government</button>
+      <button class="stab" onclick="filterHomeSecTab('pvt',this)">💼 Private</button>
+      <button class="stab" onclick="filterHomeSecTab('stu',this)">🎓 Students</button>
+    </div>
+    <div class="sector-grid" id="homeSectorGrid"></div>
+  </div>
+
+  <!-- STUDENT SECTION -->
+  <div class="section-block" id="students">
+    <div class="section-tag">🎓 Student Corner</div>
+    <h2>From Confusion to<br><span style="color:var(--emerald2)">Clarity — Every Stage</span></h2>
+    <p class="sub">India's most comprehensive guide for students at every level — from choosing streams after 10th to landing your dream job after graduation.</p>
+    <div class="grid3" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
+      <div class="ftile ftile-violet" style="cursor:pointer" onclick="showPage('registerPage')"><div class="tile-icon">📚</div><div class="tile-title">After 10th Guide</div><div class="tile-desc">Science, Commerce, Arts — compare streams, future career paths, and entrance exams.</div></div>
+      <div class="ftile ftile-emerald" style="cursor:pointer" onclick="showPage('registerPage')"><div class="tile-icon">🔬</div><div class="tile-title">JEE / NEET Predictor</div><div class="tile-desc">Enter your rank and get college admission predictions with branch suggestions.</div></div>
+      <div class="ftile ftile-amber" style="cursor:pointer" onclick="showPage('registerPage')"><div class="tile-icon">🏅</div><div class="tile-title">Scholarship Finder</div><div class="tile-desc">100+ government & private scholarships matched to your profile and marks.</div></div>
+      <div class="ftile ftile-sky" style="cursor:pointer" onclick="showPage('registerPage')"><div class="tile-icon">✈️</div><div class="tile-title">Study Abroad Advisor</div><div class="tile-desc">USA, UK, Canada, Germany — complete application guides and scholarship info.</div></div>
+      <div class="ftile ftile-rose" style="cursor:pointer" onclick="showPage('registerPage')"><div class="tile-icon">💳</div><div class="tile-title">Education Loan AI</div><div class="tile-desc">Instant eligibility check for SBI, HDFC, Axis education loans with EMI plans.</div></div>
+      <div class="ftile ftile-saffron" style="cursor:pointer" onclick="showPage('registerPage')"><div class="tile-icon">🎯</div><div class="tile-title">Placement Predictor</div><div class="tile-desc">CGPA + skills = placement probability at top companies with salary range.</div></div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div class="section-block" id="testimonials">
+    <div class="section-tag">⭐ Success Stories</div>
+    <h2>Real people. <span style="color:var(--violet2)">Real decisions.</span></h2>
+    <p class="sub" style="margin-bottom:40px;">Thousands of Indians have used PathMind to change their lives.</p>
+    <div class="testimonials">
+      <div class="tcard"><div class="tcard-quote">"PathMind told me I was underpaid by ₹8L/year. I switched jobs 3 months later with a 52% hike. The AI literally predicted my interview success rate at Swiggy!"</div><div class="tcard-author"><div class="tcard-av" style="background:linear-gradient(135deg,#6c63ff,#43e97b)">AS</div><div><div class="tcard-name">Aryan Singh</div><div class="tcard-role">Software Engineer, Bengaluru</div></div></div></div>
+      <div class="tcard"><div class="tcard-quote">"I was confused between UPSC and MBA. The Life Decision AI gave me a 78% confidence score for IAS based on my personality — and I cleared Prelims 8 months later!"</div><div class="tcard-author"><div class="tcard-av" style="background:linear-gradient(135deg,#ff8c00,#f9c74f)">PM</div><div><div class="tcard-name">Priya Mishra</div><div class="tcard-role">IAS Aspirant, Delhi</div></div></div></div>
+      <div class="tcard"><div class="tcard-quote">"As a 12th pass student from a small town, PathMind found me 3 scholarships I never knew existed. Got ₹2.5L for my B.Tech — completely changed my family's finances."</div><div class="tcard-author"><div class="tcard-av" style="background:linear-gradient(135deg,#2ecc71,#55efc4)">RK</div><div><div class="tcard-name">Rahul Kumar</div><div class="tcard-role">B.Tech Student, Patna</div></div></div></div>
+    </div>
+  </div>
+
+  <!-- FOOTER CTA -->
+  <div style="text-align:center;padding:80px 20px;background:linear-gradient(180deg,transparent,rgba(124,111,239,0.06));">
+    <h2 style="font-size:clamp(32px,5vw,56px);margin-bottom:16px;">Ready to <span style="color:var(--violet2)">transform</span> your future?</h2>
+    <p style="color:var(--muted);font-size:18px;margin-bottom:36px;">Join 2.8 lakh Indians who made smarter decisions with PathMind AI</p>
+    <button class="cta-big cta-main" onclick="showPage('registerPage')">Create Free Account →</button>
+  </div>
+</div>
+
+<!-- ═══════════════ LOGIN ═══════════════ -->
+<div id="loginPage" class="page">
+  <div class="auth-wrap">
+    <div class="auth-bg"></div>
+    <div class="auth-card">
+      <h2 class="auth-title">Welcome back 👋</h2>
+      <p class="auth-sub">Sign in to your PathMind account</p>
+      <div class="fgroup"><label class="flabel">Email Address</label><input class="finput" type="email" id="lEmail" placeholder="you@example.com"></div>
+      <div class="fgroup"><label class="flabel">Password</label><input class="finput" type="password" id="lPass" placeholder="••••••••"></div>
+      <button class="fsubmit" onclick="doLogin()">Sign In →</button>
+      <button class="demo-btn" onclick="demoLogin()">⚡ Use Demo Account (Instant Access)</button>
+      <div class="auth-link">New here? <span onclick="showPage('registerPage')">Create free account</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ REGISTER ═══════════════ -->
+<div id="registerPage" class="page">
+  <div class="auth-wrap">
+    <div class="auth-bg"></div>
+    <div class="auth-card">
+      <h2 class="auth-title">Create Account 🚀</h2>
+      <p class="auth-sub">Join India's smartest career platform — free forever</p>
+      <div class="row2">
+        <div class="fgroup"><label class="flabel">First Name</label><input class="finput" id="rFirst" placeholder="Arjun"></div>
+        <div class="fgroup"><label class="flabel">Last Name</label><input class="finput" id="rLast" placeholder="Sharma"></div>
+      </div>
+      <div class="fgroup"><label class="flabel">Email</label><input class="finput" type="email" id="rEmail" placeholder="you@example.com"></div>
+      <div class="fgroup"><label class="flabel">Password</label><input class="finput" type="password" id="rPass" placeholder="Min 6 characters"></div>
+      <div class="row2">
+        <div class="fgroup"><label class="flabel">Age</label><input class="finput" type="number" id="rAge" placeholder="22" min="14" max="65"></div>
+        <div class="fgroup"><label class="flabel">I am a...</label>
+          <select class="finput" id="rType">
+            <option value="student">🎓 Student</option>
+            <option value="fresher">🌱 Fresher</option>
+            <option value="professional">💼 Working Professional</option>
+            <option value="govt">🏛️ Government Employee</option>
+            <option value="entrepreneur">🚀 Entrepreneur</option>
+          </select>
+        </div>
+      </div>
+      <div class="fgroup"><label class="flabel">Education</label>
+        <select class="finput" id="rEdu">
+          <option value="">Select...</option>
+          <option>10th / Class X</option>
+          <option>12th / Class XII</option>
+          <option>Diploma</option>
+          <option>B.Tech / B.E.</option>
+          <option>BCA / B.Sc (CS)</option>
+          <option>B.Com / BBA</option>
+          <option>BA / B.Sc (Other)</option>
+          <option>M.Tech / MCA</option>
+          <option>MBA</option>
+          <option>M.Sc / MA</option>
+          <option>PhD</option>
+        </select>
+      </div>
+      <button class="fsubmit" onclick="doRegister()">Create Account & Start →</button>
+      <div class="auth-link">Already have account? <span onclick="showPage('loginPage')">Sign in</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DASHBOARD ═══════════════ -->
+<div id="dashPage" class="page">
+  <div class="dash">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-label">Main</div>
+      <div class="sitem active" id="snav-home" onclick="showSection('home')"><span class="sitem-icon">🏠</span>Dashboard</div>
+      <div class="sitem" id="snav-decision" onclick="showSection('decision')"><span class="sitem-icon">🧠</span>Life Decision AI</div>
+      <div class="sitem" id="snav-career" onclick="showSection('career')"><span class="sitem-icon">🎯</span>Career Predictor</div>
+      <div class="sitem" id="snav-loan" onclick="showSection('loan')"><span class="sitem-icon">🏦</span>Loan Predictor<span class="sitem-badge">New</span></div>
+      <div class="sidebar-sep"></div>
+      <div class="sidebar-label">Explore</div>
+      <div class="sitem" id="snav-govt" onclick="showSection('govt')"><span class="sitem-icon">🏛️</span>Government Sector</div>
+      <div class="sitem" id="snav-private" onclick="showSection('private')"><span class="sitem-icon">💼</span>Private Sector</div>
+      <div class="sitem" id="snav-student" onclick="showSection('student')"><span class="sitem-icon">🎓</span>Student Corner</div>
+      <div class="sitem" id="snav-market" onclick="showSection('market')"><span class="sitem-icon">📊</span>Job Market</div>
+      <div class="sidebar-sep"></div>
+      <div class="sidebar-label">Account</div>
+      <div class="sitem" id="snav-history" onclick="showSection('history')"><span class="sitem-icon">🕐</span>My History</div>
+      <div class="sitem" id="snav-profile" onclick="showSection('profile')"><span class="sitem-icon">👤</span>Profile</div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="dcontent">
+
+      <!-- ── HOME ── -->
+      <div class="sec active" id="sec-home">
+        <div class="sec-header">
+          <h2>Good day, <span class="text-v" id="wName">User</span> 👋</h2>
+          <p>Your personalized AI career intelligence — updated daily</p>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><div class="kpi-label">Profile Score</div><div class="kpi-value text-e" id="kpiScore">0%</div><div class="kpi-sub">Complete profile</div></div>
+          <div class="kpi"><div class="kpi-label">Skills Added</div><div class="kpi-value" id="kpiSkills">0</div><div class="kpi-sub">Add more for accuracy</div></div>
+          <div class="kpi"><div class="kpi-label">Analyses Done</div><div class="kpi-value" id="kpiAnalyses">0</div><div class="kpi-sub kpi-up" id="kpiAnalysesSub">Start now</div></div>
+          <div class="kpi"><div class="kpi-label">Best Match Role</div><div class="kpi-value" style="font-size:16px;" id="kpiBest">—</div><div class="kpi-sub">Run Career Predictor</div></div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <h3>⚡ Quick Actions</h3>
+            <div class="qa-grid">
+              <button class="qa-btn" onclick="showSection('decision')" style="background:rgba(124,111,239,0.1);border-color:rgba(124,111,239,0.25);"><span class="qi">🧠</span>Life Decision</button>
+              <button class="qa-btn" onclick="showSection('career')" style="background:rgba(46,204,113,0.1);border-color:rgba(46,204,113,0.25);"><span class="qi">🎯</span>Career Paths</button>
+              <button class="qa-btn" onclick="showSection('loan')" style="background:rgba(253,121,168,0.1);border-color:rgba(253,121,168,0.25);"><span class="qi">🏦</span>Loan Check</button>
+              <button class="qa-btn" onclick="showSection('govt')" style="background:rgba(255,140,0,0.1);border-color:rgba(255,140,0,0.25);"><span class="qi">🏛️</span>Govt Exams</button>
+              <button class="qa-btn" onclick="showSection('student')" style="background:rgba(52,152,219,0.1);border-color:rgba(52,152,219,0.25);"><span class="qi">🎓</span>Student Help</button>
+              <button class="qa-btn" onclick="showSection('market')" style="background:rgba(243,156,18,0.1);border-color:rgba(243,156,18,0.25);"><span class="qi">📊</span>Market Data</button>
+            </div>
+          </div>
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <h3 style="margin:0;">🔥 Trending Skills in India</h3>
+              <span id="trendLiveBadge" style="display:none;background:#1D9E75;color:white;font-size:10px;padding:2px 8px;border-radius:20px;">LIVE</span>
+            </div>
+            <div id="trendHome"></div>
+            <p id="trendSourceNote" style="color:#444;font-size:10px;margin-top:8px;text-align:right;">📊 Cached data</p>
+          </div>
+        </div>
+        <div class="card">
+          <h3>💡 Your AI Insight Today</h3>
+          <p style="color:var(--muted);line-height:1.8;font-size:15px;" id="aiInsightHome">Complete your profile to unlock personalized AI career insights. The more we know about you, the better PathMind guides you.</p>
+        </div>
+      </div>
+
+      <!-- ── LIFE DECISION AI ── -->
+      <div class="sec" id="sec-decision">
+        <div class="sec-header"><h2>🧠 Life Decision AI</h2><p>Tell us your situation — get a data-backed life decision with action plan</p></div>
+        <div class="card">
+          <h3>Your Current Situation</h3>
+          <div class="row2">
+            <div class="fgroup"><label class="flabel">Current Role</label>
+              <select class="finput" id="dRole">
+                <option value="">Select your role...</option>
+                <option>Fresher / Just Graduated</option>
+                <option>Junior Developer (0-2 yrs)</option>
+                <option>Mid-level Engineer (2-5 yrs)</option>
+                <option>Senior Engineer / Lead (5+ yrs)</option>
+                <option>Manager / Team Lead</option>
+                <option>Government Employee</option>
+                <option>Bank / Finance Professional</option>
+                <option>Doctor / Healthcare</option>
+                <option>Teacher / Professor</option>
+                <option>Defence Personnel</option>
+                <option>Entrepreneur / Business</option>
+                <option>Student / 12th Pass</option>
+                <option>Non-Tech Professional</option>
+              </select>
+            </div>
+            <div class="fgroup"><label class="flabel">Industry / Sector</label>
+              <select class="finput" id="dIndustry">
+                <option value="">Select sector...</option>
+                <optgroup label="🏛️ Government">
+                  <option value="ias">IAS / Civil Services</option>
+                  <option value="banking_govt">Government Banking (RBI, SBI)</option>
+                  <option value="defence">Defence (Army/Navy/Air Force)</option>
+                  <option value="railways">Indian Railways</option>
+                  <option value="psu">PSU (ONGC, BHEL, NTPC)</option>
+                  <option value="teaching_govt">Government Teaching</option>
+                </optgroup>
+                <optgroup label="💼 Private Sector">
+                  <option value="it_software">IT / Software</option>
+                  <option value="fintech">FinTech / Banking</option>
+                  <option value="ecommerce">E-Commerce / Startup</option>
+                  <option value="healthcare_pvt">Healthcare / Pharma</option>
+                  <option value="edtech">EdTech</option>
+                  <option value="consulting">Consulting / Big 4</option>
+                  <option value="manufacturing">Manufacturing / Auto</option>
+                  <option value="media">Media / Entertainment</option>
+                </optgroup>
+                <optgroup label="🎓 Academic">
+                  <option value="student_engg">Engineering Student</option>
+                  <option value="student_med">Medical Student</option>
+                  <option value="student_arts">Arts / Commerce Student</option>
+                  <option value="mba_student">MBA Student</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="fgroup"><label class="flabel">Monthly Income (₹)</label><input class="finput" type="number" id="dSalary" placeholder="e.g. 75000"></div>
+            <div class="fgroup"><label class="flabel">Years of Experience</label><input class="finput" type="number" id="dExp" placeholder="e.g. 3" min="0" max="45"></div>
+          </div>
+          <div class="fgroup"><label class="flabel">Your Skills</label>
+            <div class="skill-row"><input class="finput" id="dSkillIn" placeholder="Type skill + press Enter or +" onkeydown="if(event.key==='Enter')addSkill('d')"><button class="add-skill-btn" onclick="addSkill('d')">+</button></div>
+            <div class="tags" id="dTags"></div>
+          </div>
+          <div class="fgroup"><label class="flabel">Primary Goal</label>
+            <select class="finput" id="dGoal">
+              <option value="">What do you want most?</option>
+              <option value="money">💰 Higher Salary & Financial Freedom</option>
+              <option value="stability">🛡️ Job Security & Stability</option>
+              <option value="passion">❤️ Follow My Passion</option>
+              <option value="growth">📈 Fast Career Growth & Promotions</option>
+              <option value="worklife">⚖️ Better Work-Life Balance</option>
+              <option value="govt">🏛️ Enter Government Service</option>
+              <option value="abroad">✈️ Work or Study Abroad</option>
+              <option value="startup">🚀 Start My Own Business</option>
+            </select>
+          </div>
+          <div class="sl-wrap">
+            <div class="sl-top"><span style="font-size:14px;">Job Satisfaction</span><span class="sl-val" id="dSatV">5</span></div>
+            <input type="range" min="1" max="10" value="5" id="dSat" oninput="document.getElementById('dSatV').textContent=this.value">
+            <div class="sl-labels"><span>Very Unhappy</span><span>Neutral</span><span>Very Happy</span></div>
+          </div>
+          <div class="sl-wrap">
+            <div class="sl-top"><span style="font-size:14px;">Market Demand for Your Skills</span><span class="sl-val" id="dDemV">5</span></div>
+            <input type="range" min="1" max="10" value="5" id="dDem" oninput="document.getElementById('dDemV').textContent=this.value">
+            <div class="sl-labels"><span>Low</span><span>Medium</span><span>Very High</span></div>
+          </div>
+          <div class="fgroup"><label class="flabel">Additional Context (Optional)</label><textarea class="finput" id="dContext" rows="3" placeholder="Describe your situation in detail for more accurate AI advice..."></textarea></div>
+          <button class="submit" onclick="runDecision()">🤖 Get My Life Decision →</button>
+        </div>
+        <div class="loading" id="dLoading"><div class="spin"></div><div class="loading-msg">Analyzing your profile with AI...</div></div>
+        <div id="dResult"></div>
+      </div>
+
+      <!-- ── CAREER PREDICTOR ── -->
+      <div class="sec" id="sec-career">
+        <div class="sec-header"><h2>🎯 Career Path Predictor</h2><p>Enter your skills and background — get your top 5 ideal career paths with AI</p></div>
+        <div class="card">
+          <div class="row2">
+            <div class="fgroup"><label class="flabel">Education Level</label>
+              <select class="finput" id="cEdu">
+                <option value="">Select...</option>
+                <option value="hs">10th / 12th Pass</option>
+                <option value="dip">Diploma</option>
+                <option value="bt">B.Tech / B.E.</option>
+                <option value="bsc">BCA / B.Sc</option>
+                <option value="bcom">B.Com / BBA</option>
+                <option value="ba">BA / Other Graduate</option>
+                <option value="mba">MBA</option>
+                <option value="mt">M.Tech / MCA</option>
+                <option value="phd">PhD</option>
+              </select>
+            </div>
+            <div class="fgroup"><label class="flabel">Field of Study</label>
+              <select class="finput" id="cField">
+                <option value="">Select field...</option>
+                <option value="cs">Computer Science / IT</option>
+                <option value="ee">Electronics / Electrical</option>
+                <option value="mech">Mechanical Engineering</option>
+                <option value="civil">Civil Engineering</option>
+                <option value="commerce">Commerce / Finance</option>
+                <option value="arts">Arts / Humanities</option>
+                <option value="science">Pure Science (Physics/Chem/Bio)</option>
+                <option value="medical">Medical / Pharma</option>
+                <option value="management">Management / MBA</option>
+                <option value="law">Law / LLB</option>
+              </select>
+            </div>
+          </div>
+          <div class="fgroup"><label class="flabel">Your Technical Skills</label>
+            <div class="skill-row"><input class="finput" id="cSkillIn" placeholder="e.g. Python, React, SQL, Figma, Tally..." onkeydown="if(event.key==='Enter')addSkill('c')"><button class="add-skill-btn" onclick="addSkill('c')">+</button></div>
+            <div class="tags" id="cTags"></div>
+          </div>
+          <div class="fgroup"><label class="flabel">Interests (click to select)</label>
+            <div class="tags" id="interestChips" style="margin-top:4px;"></div>
+          </div>
+          <div class="row2">
+            <div class="fgroup"><label class="flabel">Work Style Preference</label>
+              <select class="finput" id="cStyle">
+                <option value="">Select...</option>
+                <option value="technical">🔧 Deep Technical Work</option>
+                <option value="creative">🎨 Creative / Design</option>
+                <option value="people">👥 People & Leadership</option>
+                <option value="analytical">📊 Data & Analysis</option>
+                <option value="business">💼 Business & Strategy</option>
+                <option value="govt_work">🏛️ Structured / Government-style</option>
+              </select>
+            </div>
+            <div class="fgroup"><label class="flabel">Target Salary Range</label>
+              <select class="finput" id="cSalary">
+                <option value="">Select...</option>
+                <option value="3-6">₹3–6 LPA (Entry Level)</option>
+                <option value="6-12">₹6–12 LPA (Junior)</option>
+                <option value="12-20">₹12–20 LPA (Mid Level)</option>
+                <option value="20-40">₹20–40 LPA (Senior)</option>
+                <option value="40+">₹40+ LPA (Lead / Director)</option>
+              </select>
+            </div>
+          </div>
+          <button class="submit submit-emerald" onclick="runCareer()">🎯 Predict My Career Paths →</button>
+        </div>
+        <div class="loading" id="cLoading"><div class="spin"></div><div class="loading-msg">Matching your profile with 500+ career paths...</div></div>
+        <div id="cResult"></div>
+      </div>
+
+      <!-- ── LOAN PREDICTOR ── -->
+      <div class="sec" id="sec-loan">
+        <div class="sec-header"><h2>🏦 Loan Eligibility Predictor</h2><p>Check loan eligibility instantly — Education, Home, Personal, Vehicle, Business, Gold</p></div>
+        <div class="card">
+          <div class="fgroup"><label class="flabel">Loan Type</label>
+            <select class="finput" id="lType" onchange="updateLoanForm()">
+              <option value="">Select loan type...</option>
+              <option value="education">🎓 Education Loan</option>
+              <option value="home">🏠 Home Loan</option>
+              <option value="personal">💳 Personal Loan</option>
+              <option value="vehicle">🚗 Vehicle Loan</option>
+              <option value="business">🏢 Business Loan</option>
+              <option value="gold">🥇 Gold Loan</option>
+            </select>
+          </div>
+          <div class="row2">
+            <div class="fgroup"><label class="flabel">Loan Amount Required (₹)</label><input class="finput" type="number" id="lAmount" placeholder="e.g. 1000000"></div>
+            <div class="fgroup"><label class="flabel">Tenure (Years)</label><input class="finput" type="number" id="lTenure" placeholder="e.g. 5" min="1" max="30"></div>
+          </div>
+          <div class="row2">
+            <div class="fgroup"><label class="flabel">Monthly Income (₹)</label><input class="finput" type="number" id="lIncome" placeholder="e.g. 60000"></div>
+            <div class="fgroup"><label class="flabel">Employment Type</label>
+              <select class="finput" id="lEmpType">
+                <option value="">Select...</option>
+                <option value="salaried_govt">Salaried — Government</option>
+                <option value="salaried_pvt">Salaried — Private</option>
+                <option value="self_employed">Self Employed / Business</option>
+                <option value="student">Student (Education Loan)</option>
+                <option value="freelancer">Freelancer</option>
+                <option value="farmer">Farmer / Agricultural</option>
+              </select>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="fgroup"><label class="flabel">Age</label><input class="finput" type="number" id="lAge" placeholder="e.g. 28" min="18" max="70"></div>
+            <div class="fgroup"><label class="flabel">Existing EMIs (₹/month)</label><input class="finput" type="number" id="lExistEmi" placeholder="e.g. 5000 (0 if none)"></div>
+          </div>
+          <div class="sl-wrap">
+            <div class="sl-top"><span style="font-size:14px;">Credit Score (CIBIL)</span><span class="sl-val" id="lCibilV">750</span></div>
+            <input type="range" min="300" max="900" value="750" step="10" id="lCibil" oninput="document.getElementById('lCibilV').textContent=this.value">
+            <div class="sl-labels"><span>300 (Poor)</span><span>600 (Fair)</span><span>900 (Excellent)</span></div>
+          </div>
+          <div id="loanExtra"></div>
+          <button class="submit submit-rose" onclick="runLoan()">🏦 Check Loan Eligibility →</button>
+        </div>
+        <div class="loading" id="lLoading"><div class="spin"></div><div class="loading-msg">Running loan eligibility model...</div></div>
+        <div id="lResult"></div>
+      </div>
+
+      <!-- ── GOVERNMENT SECTOR ── -->
+      <div class="sec" id="sec-govt">
+        <div class="sec-header"><h2>🏛️ Government Sector Guide</h2><p>Complete guide to every government exam, recruitment, and career path in India</p></div>
+        <div class="kpis">
+          <div class="kpi"><div class="kpi-label">Govt Vacancies 2024</div><div class="kpi-value text-s">8.5L+</div><div class="kpi-sub">Across all depts</div></div>
+          <div class="kpi"><div class="kpi-label">Exams Covered</div><div class="kpi-value">50+</div><div class="kpi-sub">UPSC to State PSC</div></div>
+          <div class="kpi"><div class="kpi-label">Avg Govt Salary</div><div class="kpi-value text-e">₹7.8L</div><div class="kpi-sub">Per annum + benefits</div></div>
+          <div class="kpi"><div class="kpi-label">Job Security</div><div class="kpi-value" style="font-size:18px;">Lifetime</div><div class="kpi-sub">Pension + gratuity</div></div>
+        </div>
+        <div class="card">
+          <h3>Find Government Jobs by Category</h3>
+          <div class="sector-tabs" id="govtTabs">
+            <button class="stab active" onclick="filterGovt('all',this)">All</button>
+            <button class="stab" onclick="filterGovt('civil',this)">Civil Services</button>
+            <button class="stab" onclick="filterGovt('banking',this)">Banking</button>
+            <button class="stab" onclick="filterGovt('defence',this)">Defence</button>
+            <button class="stab" onclick="filterGovt('railway',this)">Railways</button>
+            <button class="stab" onclick="filterGovt('psu',this)">PSU / CPSU</button>
+            <button class="stab" onclick="filterGovt('ssc',this)">SSC / Staff</button>
+            <button class="stab" onclick="filterGovt('teaching',this)">Teaching</button>
+          </div>
+          <div style="overflow-x:auto;margin-top:8px;">
+            <table class="exam-table" id="govtTable">
+              <thead><tr><th>Exam / Post</th><th>Conducting Body</th><th>Vacancies</th><th>Min Qualification</th><th>Salary Range</th><th>Demand</th></tr></thead>
+              <tbody id="govtTbody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="color:#7F77DD;margin-bottom:16px;">🏛️ Live Government Opportunities</h3>
+          <div id="govLiveJobs">
+            <p style="color:#888;">Loading real data...</p>
+          </div>
+          <p style="color:#444;font-size:11px;margin-top:8px;">
+            Source: data.gov.in (Official Government of India)
+          </p>
+        </div>
+        <div class="card">
+          <h3>📅 Upcoming Exam Calendar 2024-25</h3>
+          <div id="examCalendar" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;"></div>
+        </div>
+      </div>
+
+      <!-- ── PRIVATE SECTOR ── -->
+      <div class="sec" id="sec-private">
+        <div class="sec-header"><h2>💼 Private Sector Explorer</h2><p>Explore India's booming private sector — salaries, growth, top companies</p></div>
+        <div class="kpis">
+          <div class="kpi"><div class="kpi-label">Private Jobs India</div><div class="kpi-value text-v">1.2M+</div><div class="kpi-sub">Active openings</div></div>
+          <div class="kpi"><div class="kpi-label">Avg IT Salary</div><div class="kpi-value text-e">₹12.4L</div><div class="kpi-sub">Mid-level engineer</div></div>
+          <div class="kpi"><div class="kpi-label">Fastest Growing</div><div class="kpi-value" style="font-size:16px;color:var(--amber2);">AI/ML</div><div class="kpi-sub">+67% YoY demand</div></div>
+          <div class="kpi"><div class="kpi-label">Remote Jobs</div><div class="kpi-value text-s">34%</div><div class="kpi-sub">Of all listings</div></div>
+        </div>
+        <div class="card">
+          <h3>Explore by Industry</h3>
+          <div class="sector-grid" id="pvtSectorGrid" style="margin-top:8px;"></div>
+        </div>
+        <div class="card mt-16" id="pvtDetailCard" style="display:none;">
+          <h3 id="pvtDetailTitle">Industry Deep Dive</h3>
+          <div id="pvtDetailContent"></div>
+        </div>
+      </div>
+
+      <!-- ── STUDENT CORNER ── -->
+      <div class="sec" id="sec-student">
+        <div class="sec-header"><h2>🎓 Student Corner</h2><p>Everything a student needs — scholarships, exams, career paths, study abroad</p></div>
+        <div class="kpis">
+          <div class="kpi"><div class="kpi-label">Scholarships Listed</div><div class="kpi-value text-e">120+</div><div class="kpi-sub">₹500 to ₹10L/year</div></div>
+          <div class="kpi"><div class="kpi-label">Entrance Exams</div><div class="kpi-value">40+</div><div class="kpi-sub">JEE to CAT to GATE</div></div>
+          <div class="kpi"><div class="kpi-label">Avg Education Loan</div><div class="kpi-value text-v">₹8.2L</div><div class="kpi-sub">Interest 8-11%</div></div>
+          <div class="kpi"><div class="kpi-label">Study Abroad Cost</div><div class="kpi-value" style="font-size:16px;color:var(--amber2);">₹20-60L</div><div class="kpi-sub">Total cost estimate</div></div>
+        </div>
+
+        <!-- STUDENT TABS -->
+        <div class="sector-tabs">
+          <button class="stab active" onclick="filterStudent('scholarships',this)">🏅 Scholarships</button>
+          <button class="stab" onclick="filterStudent('entrance',this)">📝 Entrance Exams</button>
+          <button class="stab" onclick="filterStudent('after12',this)">🔀 After 12th</button>
+          <button class="stab" onclick="filterStudent('abroad',this)">✈️ Study Abroad</button>
+          <button class="stab" onclick="filterStudent('placement',this)">💼 Placement Help</button>
+        </div>
+
+        <div id="studentContent"></div>
+      </div>
+
+      <!-- ── JOB MARKET ── -->
+      <div class="sec" id="sec-market">
+        <div class="sec-header"><h2>📊 Job Market Intelligence</h2><p>Live salary trends, skill demand, and hiring data across India</p></div>
+        <div class="kpis">
+          <div class="kpi"><div class="kpi-label">Total Active Jobs</div><div class="kpi-value text-e">12.8L+</div><div class="kpi-sub">↑18% this month</div></div>
+          <div class="kpi"><div class="kpi-label">Avg Tech Salary</div><div class="kpi-value text-v">₹12.4L</div><div class="kpi-sub">Per annum 2024</div></div>
+          <div class="kpi"><div class="kpi-label">Hottest Domain</div><div class="kpi-value" style="font-size:16px;color:var(--amber2);">AI / LLMs</div><div class="kpi-sub">+67% demand YoY</div></div>
+          <div class="kpi"><div class="kpi-label">Remote Work Share</div><div class="kpi-value text-s">34%</div><div class="kpi-sub">Of all openings</div></div>
+        </div>
+        <div class="grid2">
+          <div class="chart-box"><div class="chart-head"><h3>Skill Demand Ranking</h3><span class="csubhead">India 2024</span></div><div class="chw"><canvas id="ch1"></canvas></div></div>
+          <div class="chart-box"><div class="chart-head"><h3>Salary by Role (₹ LPA)</h3><span class="csubhead">Min-Max Range</span></div><div class="chw"><canvas id="ch2"></canvas></div></div>
+        </div>
+        <div class="grid2">
+          <div class="chart-box"><div class="chart-head"><h3>Job Growth Trend</h3><span class="csubhead">2020–2024</span></div><div class="chw"><canvas id="ch3"></canvas></div></div>
+          <div class="chart-box"><div class="chart-head"><h3>City-wise Avg Salary</h3><span class="csubhead">₹ LPA, Tech Roles</span></div><div class="chw"><canvas id="ch4"></canvas></div></div>
+        </div>
+        <div class="chart-box">
+          <div class="chart-head"><h3>🔥 Hot vs Declining Skills</h3><span class="csubhead">YoY change %</span></div>
+          <div class="chw" style="height:200px;"><canvas id="ch5"></canvas></div>
+        </div>
+      </div>
+
+      <!-- ── HISTORY ── -->
+      <div class="sec" id="sec-history">
+        <div class="sec-header" style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+          <div>
+            <h2>🕐 My History</h2>
+            <p>All your saved AI analyses and recommendations</p>
+          </div>
+          <button class="btn btn-ghost" style="padding:8px 14px;font-size:12px;" onclick="clearHistory()">Clear History</button>
+        </div>
+        <div id="histList"><div class="empty"><div class="eicon">📋</div><p>No analyses yet. Run your first AI prediction!</p></div></div>
+      </div>
+
+      <!-- ── PROFILE ── -->
+      <div class="sec" id="sec-profile">
+        <div class="sec-header"><h2>👤 My Profile</h2><p>Keep your info updated for more accurate AI recommendations</p></div>
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:22px;margin-bottom:28px;flex-wrap:wrap;">
+            <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--emerald));display:flex;align-items:center;justify-content:center;font-family:'Clash Display',sans-serif;font-size:30px;font-weight:700;" id="profAvBig">U</div>
+            <div>
+              <h3 style="font-size:22px;margin-bottom:4px;" id="profNameBig">User</h3>
+              <p class="text-muted" style="font-size:14px;" id="profEmailBig">user@example.com</p>
+              <p class="text-muted" style="font-size:12px;margin-top:4px;" id="profUserIdBig">User ID: -</p>
+              <div style="display:flex;gap:7px;margin-top:8px;flex-wrap:wrap;" id="profBadges"></div>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="fgroup"><label class="flabel">Full Name</label><input class="finput" id="pName" placeholder="Your full name"></div>
+            <div class="fgroup"><label class="flabel">Age</label><input class="finput" type="number" id="pAge" placeholder="22"></div>
+          </div>
+          <div class="row2">
+            <div class="fgroup"><label class="flabel">Education</label><select class="finput" id="pEdu"><option>B.Tech/B.E.</option><option>BCA/B.Sc</option><option>MBA</option><option>M.Tech</option><option>PhD</option><option>12th</option><option>Diploma</option></select></div>
+            <div class="fgroup"><label class="flabel">Current CTC / Stipend</label><input class="finput" id="pCtc" placeholder="e.g. ₹8,00,000"></div>
+          </div>
+          <div class="fgroup"><label class="flabel">Career Goals</label><textarea class="finput" id="pGoals" rows="3" placeholder="What are your short and long-term career goals?"></textarea></div>
+          <button class="submit" onclick="saveProfile()">Save Profile ✓</button>
+        </div>
+      </div>
+
+    </div><!-- /dcontent -->
+  </div><!-- /dash -->
+</div><!-- /dashPage -->
+
+<!-- ═══════════════ FOUNDER FOOTER ═══════════════ -->
+<footer class="pm-footer" id="siteFooter" style="border-top:1px solid rgba(255,255,255,0.08);padding:24px 32px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;background:rgba(12,12,20,0.95);position:relative;z-index:10;">
+  <p class="pm-f1" style="font-size:13px;color:#888;margin:0;letter-spacing:0.3px;">Founded & Built by <span style="color:#7F77DD;font-weight:500;">Hiren Mahesh Chandra Shukla</span></p>
+  <p class="pm-f2" style="font-size:12px;color:#666;margin:0;letter-spacing:0.5px;">🏙️ Udaipur, Rajasthan, India &nbsp;·&nbsp; © 2026 PathMind AI &nbsp;·&nbsp; All rights reserved</p>
+  <p class="pm-f3" style="font-size:11px;color:#555;margin:0;letter-spacing:1.5px;text-transform:uppercase;">Empowering India's Career Decisions with AI</p>
+</footer>
+
+<!-- CHATBOT -->
+<button class="chatbtn" id="chatBtn" onclick="toggleChat()">💬</button>
+<div class="chatpanel" id="chatPanel">
+  <div class="chatheader">
+    <div>
+      <h4>🤖 PathMind AI Coach</h4>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:2px;">
+        <div style="font-size:11px;color:var(--emerald2);" id="chatStatus">● Online · Smart career coach</div>
+        <select id="chatLangSel" class="chatlang">
+          <option value="auto">Auto</option>
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+        </select>
+      </div>
+    </div>
+    <button class="chatclose" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chatmessages" id="chatMsgs">
+    <div class="cmsg cmsg-ai">👋 Namaste! I'm PathMind AI Coach. Ask me anything about career paths, government exams, education loans, salaries in India, or life decisions!</div>
+  </div>
+  <div class="chatinrow">
+    <input class="finput" id="chatIn" placeholder="Ask in English or Hindi..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chatsend" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════════════════════════
+const SECTORS_DATA = [
+  {id:'upsc',name:'UPSC / IAS',icon:'🏛️',type:'govt',count:'~1000/yr',desc:'Civil Services, IPS, IFS'},
+  {id:'ssc',name:'SSC / CGL / CHSL',icon:'📋',type:'govt',count:'~80,000/yr',desc:'Central Govt Staff'},
+  {id:'banking',name:'Banking (IBPS/SBI)',icon:'🏦',type:'govt',count:'~20,000/yr',desc:'PO, Clerk, SO'},
+  {id:'railways',name:'Indian Railways',icon:'🚂',type:'govt',count:'~50,000/yr',desc:'Group A, B, C, D'},
+  {id:'defence',name:'Defence (NDA/CDS)',icon:'⚔️',type:'govt',count:'~5,000/yr',desc:'Army, Navy, Air Force'},
+  {id:'psu',name:'PSU (GATE Based)',icon:'⚙️',type:'govt',count:'~15,000/yr',desc:'ONGC, BHEL, NTPC, GAIL'},
+  {id:'police',name:'State Police / IPS',icon:'👮',type:'govt',count:'~30,000/yr',desc:'SI, Constable, IPS'},
+  {id:'teaching_govt',name:'Govt Teaching (TET)',icon:'📚',type:'govt',count:'~50,000/yr',desc:'Primary to PGT'},
+  {id:'it',name:'IT / Software',icon:'💻',type:'pvt',count:'5L+ jobs',desc:'Dev, QA, DevOps, Cloud'},
+  {id:'fintech',name:'FinTech / Banking',icon:'💳',type:'pvt',count:'2L+ jobs',desc:'Risk, Analytics, Dev'},
+  {id:'ecom',name:'E-commerce',icon:'🛒',type:'pvt',count:'3L+ jobs',desc:'Ops, Tech, Marketing'},
+  {id:'healthcare_pvt',name:'Healthcare / Pharma',icon:'🏥',type:'pvt',count:'4L+ jobs',desc:'Clinical, Research, IT'},
+  {id:'edtech',name:'EdTech',icon:'📖',type:'pvt',count:'80K+ jobs',desc:'Content, Tech, Sales'},
+  {id:'consulting',name:'Consulting / Big 4',icon:'📊',type:'pvt',count:'1L+ jobs',desc:'Strategy, Analytics'},
+  {id:'media',name:'Media / OTT',icon:'🎬',type:'pvt',count:'60K+ jobs',desc:'Content, Production'},
+  {id:'manufacturing',name:'Manufacturing / Auto',icon:'🏭',type:'pvt',count:'2L+ jobs',desc:'Mechanical, Quality'},
+  {id:'jee',name:'JEE / Engineering',icon:'⚗️',type:'student',count:'13L candidates',desc:'IIT, NIT, IIIT entrance'},
+  {id:'neet',name:'NEET / Medical',icon:'🔬',type:'student',count:'20L candidates',desc:'MBBS, BDS entrance'},
+  {id:'cat',name:'CAT / MBA',icon:'📈',type:'student',count:'3L candidates',desc:'IIM, Top B-schools'},
+  {id:'scholarship',name:'Scholarships',icon:'🏅',type:'student',count:'120+ schemes',desc:'Govt & private funding'},
+];
+
+const GOVT_EXAMS = [
+  {cat:'civil',exam:'UPSC CSE',body:'UPSC',vacancies:'~1000',qual:'Any Degree',salary:'₹56,100–₹2,50,000',demand:'High'},
+  {cat:'civil',exam:'State PCS (All States)',body:'State PSC',vacancies:'~5,000/state',qual:'Any Degree',salary:'₹35,000–₹1,20,000',demand:'High'},
+  {cat:'civil',exam:'IFS (Forest Service)',body:'UPSC',vacancies:'~90',qual:'Science/Agriculture',salary:'₹56,100–₹1,77,500',demand:'Med'},
+  {cat:'banking',exam:'IBPS PO',body:'IBPS',vacancies:'~4,000',qual:'Any Degree',salary:'₹36,000–₹65,000',demand:'High'},
+  {cat:'banking',exam:'SBI PO',body:'SBI',vacancies:'~2,000',qual:'Any Degree',salary:'₹36,000–₹63,840',demand:'High'},
+  {cat:'banking',exam:'IBPS Clerk',body:'IBPS',vacancies:'~7,000',qual:'Any Degree',salary:'₹19,900–₹35,000',demand:'High'},
+  {cat:'banking',exam:'RBI Grade B',body:'RBI',vacancies:'~300',qual:'Graduate 60%',salary:'₹55,000–₹1,10,000',demand:'High'},
+  {cat:'banking',exam:'NABARD Grade A',body:'NABARD',vacancies:'~170',qual:'Graduate',salary:'₹44,500–₹89,050',demand:'Med'},
+  {cat:'defence',exam:'NDA',body:'UPSC',vacancies:'~400/cycle',qual:'12th Pass',salary:'₹56,100–₹2,50,000',demand:'High'},
+  {cat:'defence',exam:'CDS',body:'UPSC',vacancies:'~350',qual:'Any Degree',salary:'₹56,100–₹2,50,000',demand:'High'},
+  {cat:'defence',exam:'AFCAT (Air Force)',body:'IAF',vacancies:'~250',qual:'Graduate',salary:'₹56,100–₹2,10,000',demand:'Med'},
+  {cat:'railway',exam:'RRB NTPC',body:'RRB',vacancies:'~35,000',qual:'12th / Graduate',salary:'₹19,900–₹35,400',demand:'High'},
+  {cat:'railway',exam:'RRB JE (Junior Engineer)',body:'RRB',vacancies:'~13,000',qual:'Diploma / B.Tech',salary:'₹35,400–₹1,12,400',demand:'High'},
+  {cat:'railway',exam:'RRB Group D',body:'RRB',vacancies:'~1,03,769',qual:'10th Pass + ITI',salary:'₹18,000–₹35,000',demand:'Very High'},
+  {cat:'psu',exam:'ONGC GT (GATE)',body:'ONGC',vacancies:'~700',qual:'B.Tech (GATE)',salary:'₹60,000–₹1,80,000',demand:'High'},
+  {cat:'psu',exam:'BHEL Engineer (GATE)',body:'BHEL',vacancies:'~500',qual:'B.Tech (GATE)',salary:'₹40,000–₹1,40,000',demand:'High'},
+  {cat:'psu',exam:'NTPC Engineer (GATE)',body:'NTPC',vacancies:'~400',qual:'B.Tech (GATE)',salary:'₹50,000–₹1,60,000',demand:'High'},
+  {cat:'ssc',exam:'SSC CGL',body:'SSC',vacancies:'~20,000',qual:'Any Graduate',salary:'₹25,500–₹81,100',demand:'Very High'},
+  {cat:'ssc',exam:'SSC CHSL',body:'SSC',vacancies:'~4,000',qual:'12th Pass',salary:'₹19,900–₹63,200',demand:'High'},
+  {cat:'ssc',exam:'SSC GD Constable',body:'SSC',vacancies:'~50,000',qual:'10th Pass',salary:'₹21,700–₹69,100',demand:'Very High'},
+  {cat:'teaching',exam:'CTET / TET',body:'CBSE/State',vacancies:'50,000+ annually',qual:'B.Ed / D.El.Ed',salary:'₹25,000–₹1,00,000',demand:'High'},
+  {cat:'teaching',exam:'NET/SET (Professor)',body:'UGC',vacancies:'~8,000',qual:'PG 55%',salary:'₹57,700–₹1,82,400',demand:'Med'},
+  {cat:'teaching',exam:'KVS PGT / TGT',body:'KVS',vacancies:'~6,000',qual:'PG / Graduate + B.Ed',salary:'₹44,900–₹1,42,400',demand:'High'},
+];
+
+const PVT_SECTORS = [
+  {id:'it',icon:'💻',name:'IT / Software',tag:'pvt',roles:['Software Engineer','Full Stack Dev','Cloud Architect','DevOps Engineer','QA Engineer'],salary:'₹4–60 LPA',growth:'+28%',hotSkills:['Python','React','AWS','K8s','TypeScript'],topCompanies:['TCS','Infosys','Wipro','Google','Amazon','Microsoft','Flipkart']},
+  {id:'aiml',icon:'🤖',name:'AI / Machine Learning',tag:'pvt',roles:['ML Engineer','Data Scientist','AI Researcher','NLP Engineer','Computer Vision'],salary:'₹8–80 LPA',growth:'+67%',hotSkills:['Python','TensorFlow','PyTorch','LLMs','MLOps'],topCompanies:['Google','OpenAI India','Microsoft Research','IIT Labs','Fractal Analytics']},
+  {id:'finance',icon:'📈',name:'Banking & Finance',tag:'pvt',roles:['Investment Banker','Risk Analyst','Equity Researcher','FinTech Dev','CFO'],salary:'₹6–40 LPA',growth:'+22%',hotSkills:['Financial Modeling','Python','SQL','Bloomberg','CFA'],topCompanies:['Goldman Sachs','JPMorgan','HDFC Bank','ICICI','Zerodha','Groww']},
+  {id:'health',icon:'🏥',name:'Healthcare & Pharma',tag:'pvt',roles:['Clinical Research','Hospital Admin','Health IT','Pharma Sales','Biotech Research'],salary:'₹4–25 LPA',growth:'+31%',hotSkills:['Clinical Trials','MBBS','Bioinformatics','Regulatory Affairs'],topCompanies:['Cipla','Sun Pharma','Apollo','Fortis','Dr. Reddys']},
+  {id:'ecom',icon:'🛒',name:'E-Commerce & Retail',tag:'pvt',roles:['Product Manager','Growth Hacker','Supply Chain','Data Analyst','UX Designer'],salary:'₹5–35 LPA',growth:'+24%',hotSkills:['Python','SQL','Product Analytics','Logistics','Growth Marketing'],topCompanies:['Amazon','Flipkart','Meesho','Nykaa','Zepto','Blinkit']},
+  {id:'consulting',icon:'📊',name:'Consulting & Strategy',tag:'pvt',roles:['Management Consultant','Strategy Analyst','Business Analyst','Partner','Principal'],salary:'₹8–50 LPA',growth:'+18%',hotSkills:['Excel','PowerPoint','SQL','Case Studies','Communication'],topCompanies:['McKinsey','BCG','Bain','Deloitte','EY','KPMG','Accenture']},
+  {id:'cyber',icon:'🔒',name:'Cybersecurity',tag:'pvt',roles:['Security Analyst','Pen Tester','SOC Analyst','CISO','Security Architect'],salary:'₹6–40 LPA',growth:'+38%',hotSkills:['CISSP','Kali Linux','SIEM','Cloud Security','Network Security'],topCompanies:['Palo Alto','IBM Security','TCS CyberSec','Wipro CyberSec','Check Point']},
+  {id:'edtech',icon:'📚',name:'EdTech',tag:'pvt',roles:['Content Creator','Curriculum Designer','Learning Tech','Product Manager','Growth'],salary:'₹4–25 LPA',growth:'+19%',hotSkills:['Instructional Design','Python','Data Analytics','Video Production'],topCompanies:["BYJU'S",'Unacademy','Vedantu','Physics Wallah','Coursera India']},
+];
+
+const INTERESTS_LIST = ['Programming','Design','Data Science','AI / ML','Cloud Computing','Finance','Marketing','Teaching','Research','Entrepreneurship','Gaming','Healthcare','DevOps','Writing','Product Management','Photography','Music / Arts','Social Work'];
+
+const SCHOLARSHIP_DATA = [
+  {name:'PM YASASVI Scheme',amt:'₹75,000–₹1,25,000/yr',who:'OBC/EBC/DNT Students (Class 9–11)',deadline:'Sep 2024',type:'Central Govt'},
+  {name:'National Scholarship Portal (NSP)',amt:'₹500–₹20,000/yr',who:'SC/ST/OBC/Minority Students',deadline:'Rolling',type:'Central Govt'},
+  {name:'Inspire Scholarship (DST)',amt:'₹80,000/yr',who:'Top 1% Class 12 → Science UG',deadline:'Aug annually',type:'Central Govt'},
+  {name:'HDFC Parivartan',amt:'Up to ₹75,000',who:'Meritorious students in need',deadline:'Jun-Jul',type:'Private'},
+  {name:'Buddy4Study Merit Scholarship',amt:'₹20,000–₹1,00,000',who:'Class 10–12 merit students',deadline:'Rolling',type:'Private'},
+  {name:'Tata Capital Pankh Scholarship',amt:'Up to ₹50,000',who:'11th/12th vocational students',deadline:'Sep annually',type:'Private'},
+  {name:'Aditya Birla Scholarship',amt:'₹65,000/yr',who:'IITians / Top Engineering',deadline:'Sep–Oct',type:'Corporate'},
+  {name:'ONGC Scholarship',amt:'₹48,000/yr',who:'SC/ST in top professional courses',deadline:'Oct annually',type:'PSU'},
+  {name:'Sitaram Jindal Scholarship',amt:'₹1,000–₹2,000/month',who:'Meritorious poor students',deadline:'Rolling',type:'Private'},
+  {name:'Vidyadhan Scholarship',amt:'₹10,000–₹60,000',who:'Class 10 meritorious, family <₹2L income',deadline:'May annually',type:'NGO'},
+];
+
+const ENTRANCE_EXAMS = [
+  {exam:'JEE Main',field:'Engineering',conducting:'NTA',level:'National',attempts:'2 per year',seats:'~12L seats',url:'jeemain.nta.nic.in'},
+  {exam:'JEE Advanced',field:'Engineering (IIT)',conducting:'IIT (rotating)',level:'National',attempts:'2 lifetime',seats:'~17,000 IIT seats',url:'jeeadv.ac.in'},
+  {exam:'NEET UG',field:'Medical (MBBS/BDS)',conducting:'NTA',level:'National',attempts:'Unlimited',seats:'~1.8L MBBS seats',url:'nta.ac.in/neet'},
+  {exam:'CLAT',field:'Law (LLB)',conducting:'NLU Consortium',level:'National',attempts:'Annual',seats:'~3,000 NLU seats',url:'consortiumofnlus.ac.in'},
+  {exam:'CAT',field:'MBA',conducting:'IIM (rotating)',level:'National',attempts:'Annual',seats:'~5,000 IIM seats',url:'iimcat.ac.in'},
+  {exam:'GATE',field:'PG Engineering / PSU',conducting:'IIT/IISC',level:'National',attempts:'Annual',seats:'~17,000 IIT PG + PSU',url:'gate.iitd.ac.in'},
+  {exam:'NATA',field:'Architecture',conducting:'COA',level:'National',attempts:'Multiple/year',seats:'~50,000 seats',url:'nata.in'},
+  {exam:'CUET UG',field:'Central Universities (All)',conducting:'NTA',level:'National',attempts:'Annual',seats:'Varies',url:'cuet.samarth.ac.in'},
+  {exam:'BITSAT',field:'Engineering (BITS)',conducting:'BITS Pilani',level:'National',attempts:'Annual',seats:'~2,600 seats',url:'bitsadmission.com'},
+  {exam:'AIIMS/JIPMER',field:'Medical (PG)',conducting:'AIIMS/JIPMER',level:'National',attempts:'Annual',seats:'~2,000 PG seats',url:'aiimsexams.ac.in'},
+];
+
+// ════════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════════
+let user = null;
+let dSkills=[], cSkills=[], selInterests=[];
+let history=[];
+let chartsInited=false;
+let trendingSkillsLoaded = false;
+let isLiveData = false;
+let trendingSkills = [
+  { skill: 'AI / Generative AI', display: '+67%' },
+  { skill: 'AWS / Cloud', display: '+42%' },
+  { skill: 'Cybersecurity', display: '+38%' },
+  { skill: 'Python', display: '+31%' },
+  { skill: 'React / Next.js', display: '+22%' },
+];
+let governmentJobs = [];
+let governmentJobsLoaded = false;
+let governmentJobsLoading = false;
+let activeGovCategory = 'all';
+
+const API_BASE = window.PATHMIND_API_URL || (
+  ["localhost", "127.0.0.1"].includes(window.location.hostname)
+    ? "http://localhost:8000/api/v1"
+    : `${window.location.origin}/api/v1`
+);
+
+function getAccessToken(){ return localStorage.getItem('pm2_access_token'); }
+function getRefreshToken(){ return localStorage.getItem('pm2_refresh_token'); }
+
+function toApiError(payload, status){
+  const detail = payload?.detail;
+  const message = (typeof detail === 'string' && detail)
+    || detail?.message
+    || payload?.message
+    || `Request failed (${status})`;
+  const err = new Error(message);
+  err.status = status;
+  err.payload = payload;
+  return err;
+}
+
+function backendOfflineError(){
+  const err = new Error(
+    `Cannot connect to backend API (${API_BASE}). Start backend: cd backend && python -m uvicorn main:app --host 0.0.0.0 --port 8000`
+  );
+  err.status = 0;
+  return err;
+}
+
+async function refreshAccessToken(){
+  const refresh = getRefreshToken();
+  if(!refresh) return false;
+  try {
+    const res = await fetch(`${API_BASE}/auth/refresh`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ refresh_token: refresh })
+    });
+    if(!res.ok) return false;
+    const data = await res.json();
+    if(data?.access_token){
+      localStorage.setItem('pm2_access_token', data.access_token);
+      return true;
+    }
+  } catch(_){
+    return false;
+  }
+  return false;
+}
+
+async function apiRequest(path, options={}, requireAuth=true){
+  const method = options.method || 'GET';
+  const headers = { ...(options.headers || {}) };
+  let body = options.body;
+
+  if(body && typeof body === 'object' && !(body instanceof FormData)){
+    body = JSON.stringify(body);
+  }
+
+  if(!(body instanceof FormData) && !headers['Content-Type']){
+    headers['Content-Type'] = 'application/json';
+  }
+
+  if(requireAuth){
+    const token = getAccessToken();
+    if(token) headers.Authorization = `Bearer ${token}`;
+  }
+
+  let res;
+  try{
+    res = await fetch(`${API_BASE}${path}`, { method, headers, body });
+  }catch(_){
+    throw backendOfflineError();
+  }
+  const text = await res.text();
+  let payload = {};
+  if(text){
+    try { payload = JSON.parse(text); }
+    catch { payload = { detail: text }; }
+  }
+
+  if(!res.ok){
+    if(res.status === 401 && requireAuth && !options._retried){
+      const refreshed = await refreshAccessToken();
+      if(refreshed){
+        return apiRequest(path, { ...options, _retried: true }, requireAuth);
+      }
+    }
+    throw toApiError(payload, res.status);
+  }
+
+  return payload;
+}
+
+function normalizeUser(u={}){
+  return {
+    id: u.id,
+    first: u.first_name || u.first || '',
+    last: u.last_name || u.last || '',
+    email: u.email || '',
+    role: u.role || 'free',
+    age: u.age || '',
+    type: u.user_type || 'professional',
+    edu: u.education || '',
+    skills: Array.isArray(u.skills) ? u.skills : [],
+    goals: u.goals || '',
+    ctc: u.annual_ctc || u.ctc || ''
+  };
+}
+// ════════════════════════════════════════════════════════════
+// PARTICLES
+// ════════════════════════════════════════════════════════════
+function initParticles(){
+  const c=document.getElementById('particles');
+  for(let i=0;i<18;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    const size=Math.random()*4+2;
+    const colors=['rgba(124,111,239,0.5)','rgba(46,204,113,0.4)','rgba(255,140,0,0.3)','rgba(52,152,219,0.4)'];
+    p.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${12+Math.random()*20}s;animation-delay:${Math.random()*15}s;`;
+    c.appendChild(p);
+  }
+}
+initParticles();
+
+// ════════════════════════════════════════════════════════════
+// NAV / PAGE
+// ════════════════════════════════════════════════════════════
+function showPage(id){
+  if((id==='loginPage' || id==='registerPage') && (user || getAccessToken())){
+    id = 'dashPage';
+    if(!user && getAccessToken()){
+      bootstrapSession();
+    }
+  }
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function goHome(){ user ? showSection('home') : showPage('landingPage'); }
+function scrollToSection(id){ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth'}); }
+
+function showSection(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.sitem').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  const n=document.getElementById('snav-'+id); if(n) n.classList.add('active');
+  if(id==='home') loadTrendingSkills();
+  if(id==='market') initCharts();
+  if(id==='govt') renderGovt(activeGovCategory);
+  if(id==='private') renderPvtSectors();
+  if(id==='student') renderStudent('scholarships');
+}
+
+// ════════════════════════════════════════════════════════════
+// AUTH
+// ════════════════════════════════════════════════════════════
+async function doLogin(){
+  const e=document.getElementById('lEmail').value.trim();
+  const p=document.getElementById('lPass').value;
+  if(!e||!p){toast('Please fill all fields');return;}
+  try{
+    const data = await apiRequest('/auth/login', { method:'POST', body:{ email:e, password:p } }, false);
+    localStorage.setItem('pm2_access_token', data.access_token);
+    localStorage.setItem('pm2_refresh_token', data.refresh_token);
+    const merged = normalizeUser(data.user || {});
+    setUser(merged);
+    const userIdText = merged.id ? ` (ID: ${merged.id})` : '';
+    toast('Welcome back, '+(merged.first||'User')+'!'+userIdText);
+  }catch(err){
+    toast(err.message || 'Login failed');
+  }
+}
+
+async function doRegister(){
+  const first=document.getElementById('rFirst').value.trim();
+  const last=document.getElementById('rLast').value.trim();
+  const email=document.getElementById('rEmail').value.trim();
+  const pw=document.getElementById('rPass').value;
+  const age=parseInt(document.getElementById('rAge').value||'0',10) || undefined;
+  const type=document.getElementById('rType').value;
+  const edu=document.getElementById('rEdu').value;
+
+  if(!first||!email||!pw){toast('Please fill required fields');return;}
+  if(pw.length<6){toast('Password must be at least 6 characters');return;}
+
+  try{
+    const data = await apiRequest('/auth/signup', {
+      method:'POST',
+      body:{
+        first_name:first,
+        last_name:last,
+        email,
+        password:pw,
+        age,
+        user_type:type,
+        education:edu
+      }
+    }, false);
+
+    localStorage.setItem('pm2_access_token', data.access_token);
+    localStorage.setItem('pm2_refresh_token', data.refresh_token);
+    const merged = { ...normalizeUser(data.user || {}), age: age || '', type, edu };
+    setUser(merged);
+    const userIdText = merged.id ? ` Your user ID is ${merged.id}.` : '';
+    toast('Welcome to PathMind, '+first+'!'+userIdText);
+  }catch(err){
+    toast(err.message || 'Registration failed');
+  }
+}
+
+async function demoLogin(){
+  try{
+    const loginData = await apiRequest('/auth/login', {
+      method:'POST',
+      body:{ email:'demo@pathmind.ai', password:'demo123' }
+    }, false);
+    localStorage.setItem('pm2_access_token', loginData.access_token);
+    localStorage.setItem('pm2_refresh_token', loginData.refresh_token);
+    setUser(normalizeUser(loginData.user || {}));
+    toast('Demo mode activated!');
+    return;
+  }catch(_){ }
+
+  try{
+    const signupData = await apiRequest('/auth/signup', {
+      method:'POST',
+      body:{
+        first_name:'Demo',
+        last_name:'User',
+        email:'demo@pathmind.ai',
+        password:'demo123',
+        user_type:'professional',
+        education:'B.Tech / B.E.'
+      }
+    }, false);
+    localStorage.setItem('pm2_access_token', signupData.access_token);
+    localStorage.setItem('pm2_refresh_token', signupData.refresh_token);
+    setUser(normalizeUser(signupData.user || {}));
+    toast('Demo mode activated!');
+  }catch(err){
+    toast(err.message || 'Demo login failed');
+  }
+}
+
+function demoQuick(){ demoLogin(); }
+
+function setUser(u){
+  user={...u};
+  localStorage.setItem('pm2_user', JSON.stringify(user));
+  history=loadLocalHistory(u);
+  document.getElementById('navName').textContent=u.first || 'User';
+  document.getElementById('navAv').textContent=(u.first||'U')[0];
+  document.getElementById('wName').textContent=u.first || 'User';
+  document.getElementById('guestBtns').style.display='none';
+  document.getElementById('userBtns').style.display='flex';
+  document.getElementById('chatBtn').classList.add('on');
+  loadProfile(u);
+  updateKPIs();
+  renderHistory();
+  syncHistoryFromBackend();
+  buildInterestChips();
+  renderHomeSectors();
+  showPage('dashPage');
+  showSection('home');
+}
+
+async function logout(){
+  try{ await apiRequest('/auth/logout', { method:'POST' }, true); }catch(_){ }
+  user=null;
+  localStorage.removeItem('pm2_access_token');
+  localStorage.removeItem('pm2_refresh_token');
+  localStorage.removeItem('pm2_user');
+  document.getElementById('guestBtns').style.display='flex';
+  document.getElementById('userBtns').style.display='none';
+  document.getElementById('chatBtn').classList.remove('on');
+  document.getElementById('chatPanel').classList.remove('on');
+  showPage('landingPage');
+}
+
+async function loadProfile(u){
+  document.getElementById('profAvBig').textContent=(u.first||'U')[0];
+  document.getElementById('profNameBig').textContent=(u.first||'')+' '+(u.last||'');
+  document.getElementById('profEmailBig').textContent=u.email||'';
+  document.getElementById('profUserIdBig').textContent=`User ID: ${u.id || '-'}`;
+
+  try{
+    const profileData = await apiRequest('/user/profile');
+    const p = profileData.profile || {};
+    user = { ...user, ...normalizeUser({ ...profileData.user, ...p }) };
+    localStorage.setItem('pm2_user', JSON.stringify(user));
+    document.getElementById('profUserIdBig').textContent=`User ID: ${user.id || '-'}`;
+
+    dSkills = Array.isArray(p.skills) ? [...p.skills] : (user.skills || []);
+    user.skills = [...dSkills];
+    renderTags('d');
+
+    document.getElementById('pName').value=(user.first||'')+' '+(user.last||'');
+    document.getElementById('pAge').value=user.age||'';
+    document.getElementById('pCtc').value=user.ctc||'';
+    document.getElementById('pGoals').value=user.goals||'';
+
+    const badges=document.getElementById('profBadges');
+    const typeMap={student:'Student',fresher:'Fresher',professional:'Professional',govt:'Govt Employee',entrepreneur:'Entrepreneur'};
+    badges.innerHTML=`<span class="badge b-violet">${typeMap[user.type]||'User'}</span><span class="badge b-stu">${user.edu||'Graduate'}</span>`;
+  }catch(_){
+    document.getElementById('pName').value=(u.first||'')+' '+(u.last||'');
+    document.getElementById('pAge').value=u.age||'';
+    document.getElementById('pCtc').value=u.ctc||'';
+    document.getElementById('pGoals').value=u.goals||'';
+  }
+}
+
+async function saveProfile(){
+  if(!user)return;
+  user.goals=document.getElementById('pGoals').value;
+  user.ctc=document.getElementById('pCtc').value;
+  const ageVal = parseInt(document.getElementById('pAge').value || '0', 10) || null;
+
+  try{
+    const payload = {
+      age: ageVal,
+      user_type: user.type,
+      education: user.edu,
+      skills: [...new Set([...(user.skills||[]), ...dSkills])],
+      goals: user.goals,
+      annual_ctc: user.ctc
+    };
+    await apiRequest('/user/profile', { method:'PUT', body: payload });
+    user.age = ageVal || '';
+    user.skills = payload.skills;
+    localStorage.setItem('pm2_user', JSON.stringify(user));
+    updateKPIs();
+    toast('Profile saved!');
+  }catch(err){
+    toast(err.message || 'Profile save failed');
+  }
+}
+
+async function updateKPIs(){
+  if(!user)return;
+
+  try{
+    const dash = await apiRequest('/user/dashboard');
+    const stats = dash.stats || {};
+    const careerCount = Number(stats.career_predictions || 0);
+    const decisionCount = Number(stats.decisions_made || 0);
+    const analyses = careerCount + decisionCount;
+
+    document.getElementById('kpiScore').textContent = `${Math.round(stats.profile_score || 0)}%`;
+    document.getElementById('kpiSkills').textContent = Number(stats.skills_count || 0);
+    document.getElementById('kpiAnalyses').textContent = analyses;
+    if(dash.recent_career?.title){
+      document.getElementById('kpiBest').textContent = dash.recent_career.title.slice(0, 14);
+    }
+    document.getElementById('aiInsightHome').textContent = analyses > 0
+      ? 'Your dashboard is synced with backend AI predictions and decision history.'
+      : 'Run your first AI analysis to unlock personalized insights.';
+    return;
+  }catch(_){
+    const skills=(user.skills||[]).length;
+    const score=Math.min(98,40+skills*8+(user.goals?15:0)+(user.ctc?10:0)+(history.length*5));
+    document.getElementById('kpiScore').textContent=score+'%';
+    document.getElementById('kpiSkills').textContent=skills;
+    document.getElementById('kpiAnalyses').textContent=history.length;
+    const insight=skills>2?`Your ${skills} skills are tracked. ${skills>=5?'Excellent profile depth - run Career Predictor for best results.':'Add 2-3 more skills for sharper AI recommendations.'}`:'Complete your profile by adding skills to get personalized insights.';
+    document.getElementById('aiInsightHome').textContent=insight;
+  }
+}
+
+async function bootstrapSession(){
+  const token = getAccessToken();
+  if(!token) return;
+  const cachedRaw = localStorage.getItem('pm2_user');
+  const cached = cachedRaw ? normalizeUser(JSON.parse(cachedRaw)) : null;
+  if(cached && cached.email && !user){
+    setUser(cached);
+  }
+  try{
+    const me = await apiRequest('/auth/me');
+    const merged = { ...(cached || {}), ...normalizeUser(me) };
+    setUser(merged);
+  }catch(err){
+    if(err?.status === 401 || err?.status === 403){
+      localStorage.removeItem('pm2_access_token');
+      localStorage.removeItem('pm2_refresh_token');
+      localStorage.removeItem('pm2_user');
+      user = null;
+    } else if(cached && cached.email && !user){
+      setUser(cached);
+    }
+  }
+}
+function addSkill(p){
+  const inp=document.getElementById(p+'SkillIn');
+  const s=inp.value.trim();
+  if(!s)return;
+  const arr=p==='d'?dSkills:cSkills;
+  if(arr.includes(s)){toast('Already added');inp.value='';return;}
+  arr.push(s); renderTags(p); inp.value='';
+  if(p==='d'&&user){user.skills=[...new Set([...(user.skills||[]),...dSkills])];updateKPIs();}
+}
+function removeSkill(p,s){
+  if(p==='d') dSkills=dSkills.filter(x=>x!==s);
+  else cSkills=cSkills.filter(x=>x!==s);
+  renderTags(p);
+}
+function renderTags(p){
+  const arr=p==='d'?dSkills:cSkills;
+  document.getElementById(p+'Tags').innerHTML=arr.map(s=>`<div class="stag">${s}<span class="x" onclick="removeSkill('${p}','${s}')">✕</span></div>`).join('');
+}
+function buildInterestChips(){
+  const c=document.getElementById('interestChips');
+  c.innerHTML=INTERESTS_LIST.map(i=>`<div class="stag" id="int_${i.replace(/[^a-z]/gi,'')}" style="cursor:pointer;opacity:0.45;transition:all 0.2s;" onclick="toggleInt('${i}')">${i}</div>`).join('');
+}
+function toggleInt(i){
+  const k='int_'+i.replace(/[^a-z]/gi,'');
+  const el=document.getElementById(k);
+  if(selInterests.includes(i)){
+    selInterests=selInterests.filter(x=>x!==i);
+    el.style.opacity='0.45'; el.style.background=''; el.style.borderColor='';el.style.color='';
+  } else {
+    selInterests.push(i);
+    el.style.opacity='1'; el.style.background='rgba(46,204,113,0.2)'; el.style.borderColor='rgba(46,204,113,0.4)';el.style.color='var(--emerald2)';
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+// SECTORS (Landing + Home)
+// ════════════════════════════════════════════════════════════
+function renderHomeSectors(){
+  const g=document.getElementById('homeSectorGrid');
+  if(!g)return;
+  g.innerHTML=SECTORS_DATA.map(s=>`
+    <div class="sector-card" onclick="showPage('registerPage')">
+      <div class="sc-icon">${s.icon}</div>
+      <div class="sc-name">${s.name}</div>
+      <div class="sc-count">${s.count}</div>
+      <div class="sc-tag ${s.type}-tag">${s.type==='govt'?'🏛️ Government':s.type==='pvt'?'💼 Private':'🎓 Student'}</div>
+    </div>`).join('');
+}
+function filterHomeSecTab(type,btn){
+  document.querySelectorAll('#homeSectorTabs .stab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered=type==='all'?SECTORS_DATA:SECTORS_DATA.filter(s=>s.type===type);
+  document.getElementById('homeSectorGrid').innerHTML=filtered.map(s=>`
+    <div class="sector-card" onclick="showPage('registerPage')">
+      <div class="sc-icon">${s.icon}</div>
+      <div class="sc-name">${s.name}</div>
+      <div class="sc-count">${s.count}</div>
+      <div class="sc-tag ${s.type}-tag">${s.type==='govt'?'🏛️ Government':s.type==='pvt'?'💼 Private':'🎓 Student'}</div>
+    </div>`).join('');
+}
+
+function escapeHtml(value){
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function renderTrendingSkills(){
+  const wrap = document.getElementById('trendHome');
+  if(!wrap) return;
+
+  wrap.innerHTML = trendingSkills.map(item => `
+    <div class="trending" style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+      <span style="color:#ccc;">${escapeHtml(item.skill)}</span>
+      <span style="color:#1D9E75;font-weight:600;">${escapeHtml(item.display || '+0%')}</span>
+    </div>
+  `).join('');
+
+  const liveBadge = document.getElementById('trendLiveBadge');
+  if(liveBadge){
+    liveBadge.style.display = isLiveData ? 'inline-block' : 'none';
+  }
+  const sourceNote = document.getElementById('trendSourceNote');
+  if(sourceNote){
+    sourceNote.textContent = isLiveData ? '📡 Live: Google Trends India' : '📊 Cached data';
+  }
+}
+
+async function loadTrendingSkills(){
+  if(trendingSkillsLoaded) return;
+  trendingSkillsLoaded = true;
+  renderTrendingSkills();
+
+  try{
+    const data = await apiRequest('/realdata/trending-skills', {}, false);
+    if(Array.isArray(data?.skills) && data.skills.length){
+      trendingSkills = data.skills.map(item => ({
+        skill: item.skill || 'Unknown Skill',
+        display: item.display || `+${Number(item.trend_score || 0)}%`,
+      }));
+      isLiveData = data.success === true;
+    } else {
+      isLiveData = false;
+    }
+  }catch(_){
+    isLiveData = false;
+  }
+
+  renderTrendingSkills();
+}
+
+function getGovField(item, fields, fallback){
+  for(const key of fields){
+    const value = item?.[key];
+    if(value !== undefined && value !== null && String(value).trim()){
+      return String(value).trim();
+    }
+  }
+  return fallback;
+}
+
+function parseGovNumber(value){
+  if(value === null || value === undefined) return null;
+  const text = String(value).replace(/,/g, '').trim();
+  if(!text) return null;
+  const num = Number(text);
+  return Number.isFinite(num) ? num : null;
+}
+
+function matchesGovCategory(job, cat){
+  if(cat === 'all') return true;
+
+  const bag = [
+    getGovField(job, ['post_name', 'title', 'post', 'name'], ''),
+    getGovField(job, ['department', 'organization', 'organisation', 'ministry'], ''),
+  ].join(' ').toLowerCase();
+
+  const categoryKeywords = {
+    civil: ['civil', 'upsc', 'ias', 'pcs', 'administrative', 'forest', 'ifs'],
+    banking: ['bank', 'ibps', 'sbi', 'rbi', 'nabard', 'clerk', 'po'],
+    defence: ['defence', 'army', 'navy', 'air force', 'afcat', 'nda', 'cds'],
+    railway: ['railway', 'rrb', 'ntpc', 'loco'],
+    psu: ['psu', 'bhel', 'ntpc', 'ongc', 'gail', 'gate'],
+    ssc: ['ssc', 'cgl', 'chsl', 'constable', 'staff selection'],
+    teaching: ['teacher', 'teaching', 'tet', 'ctet', 'lecturer', 'professor', 'kvs'],
+  };
+
+  const keywords = categoryKeywords[cat] || [];
+  return keywords.some(keyword => bag.includes(keyword));
+}
+
+function renderGovernmentJobs(){
+  const wrap = document.getElementById('govLiveJobs');
+  if(!wrap) return;
+
+  if(governmentJobsLoading && !governmentJobsLoaded){
+    wrap.innerHTML = '<p style="color:#888;">Loading real data...</p>';
+    return;
+  }
+
+  const filteredJobs = governmentJobs.filter(job => matchesGovCategory(job, activeGovCategory));
+  const hasFilteredMatches = filteredJobs.length > 0;
+  const visibleJobs = (hasFilteredMatches ? filteredJobs : governmentJobs).slice(0, 12);
+
+  if(!visibleJobs.length){
+    wrap.innerHTML = '<p style="color:#888;">No data available right now. Check back soon!</p>';
+    return;
+  }
+
+  const fallbackHint = activeGovCategory !== 'all' && !hasFilteredMatches
+    ? `<p style="color:#8b90a7;font-size:12px;margin:0 0 10px;">No exact ${escapeHtml(activeGovCategory)} matches in current feed. Showing latest live opportunities instead.</p>`
+    : '';
+
+  const cards = visibleJobs.map((job, index) => {
+    const title = getGovField(job, ['post_name', 'title', 'post', 'name'], 'Government Position');
+    const department = getGovField(
+      job,
+      ['department', 'organization', 'organisation', 'ministry', 'board'],
+      'Government of India'
+    );
+    const category = getGovField(job, ['category'], 'Live Listing');
+    const location = getGovField(job, ['state_ut', 'state', 'location'], 'India');
+    const vacancies = parseGovNumber(job?.vacancies ?? job?.number_of_vacancies);
+    const vacancyLabel = vacancies && vacancies > 0 ? `${vacancies.toLocaleString('en-IN')} vacancies` : 'Vacancy count updating';
+
+    return `
+      <div key="${index}" style="background:#1e2235;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px;">
+        <p style="color:white;font-weight:600;margin:0 0 5px;font-size:14px;line-height:1.35;">${escapeHtml(title)}</p>
+        <p style="color:#9ba3c7;font-size:12px;margin:0 0 10px;">${escapeHtml(department)}</p>
+        <p style="color:#d5dbef;font-size:12px;margin:0 0 10px;">📍 ${escapeHtml(location)}</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="background:#243154;color:#9fc3ff;font-size:11px;padding:2px 8px;border-radius:20px;">${escapeHtml(category)}</span>
+          <span style="background:#203c31;color:#7be4b9;font-size:11px;padding:2px 8px;border-radius:20px;">${escapeHtml(vacancyLabel)}</span>
+          <span style="background:#1D9E75;color:white;font-size:11px;padding:2px 8px;border-radius:20px;">Live Data</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  wrap.innerHTML = `
+    ${fallbackHint}
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;">
+      ${cards}
+    </div>
+  `;
+}
+
+async function loadGovernmentJobs(){
+  if(governmentJobsLoading) return;
+  if(governmentJobsLoaded){
+    renderGovernmentJobs();
+    return;
+  }
+
+  governmentJobsLoading = true;
+  renderGovernmentJobs();
+  try{
+    const data = await apiRequest('/realdata/government-jobs', {}, false);
+    governmentJobs = Array.isArray(data?.data) ? data.data : [];
+  }catch(_){
+    governmentJobs = [];
+  }finally{
+    governmentJobsLoaded = true;
+    governmentJobsLoading = false;
+    renderGovernmentJobs();
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+// GOVERNMENT SECTOR
+// ════════════════════════════════════════════════════════════
+function renderGovt(cat){
+  activeGovCategory = cat || activeGovCategory;
+  const rows=activeGovCategory==='all'?GOVT_EXAMS:GOVT_EXAMS.filter(e=>e.cat===activeGovCategory);
+  const demColor={High:'b-high',Med:'b-med','Very High':'b-high'};
+  document.getElementById('govtTbody').innerHTML=rows.map(e=>`
+    <tr>
+      <td style="font-weight:600;">${e.exam}</td>
+      <td style="color:var(--muted)">${e.body}</td>
+      <td style="color:var(--emerald2)">${e.vacancies}</td>
+      <td style="color:var(--muted);font-size:13px">${e.qual}</td>
+      <td style="color:var(--amber2);font-weight:600;">${e.salary}</td>
+      <td><span class="badge ${demColor[e.demand]||'b-med'}">${e.demand}</span></td>
+    </tr>`).join('');
+  // Exam calendar
+  const upcoming=[
+    {exam:'UPSC CSE Prelims',date:'May–Jun 2025',icon:'🏛️'},
+    {exam:'IBPS PO',date:'Oct–Nov 2024',icon:'🏦'},
+    {exam:'SSC CGL',date:'Dec 2024 – Jan 2025',icon:'📋'},
+    {exam:'RRB NTPC',date:'Jan–Mar 2025',icon:'🚂'},
+    {exam:'GATE 2025',date:'Feb 2025',icon:'⚙️'},
+    {exam:'SBI Clerk',date:'Nov 2024',icon:'💰'},
+  ];
+  document.getElementById('examCalendar').innerHTML=upcoming.map(u=>`
+    <div style="background:var(--card2);border:1px solid var(--border);border-radius:var(--r2);padding:16px;display:flex;align-items:center;gap:14px;">
+      <span style="font-size:24px">${u.icon}</span>
+      <div><div style="font-weight:600;font-size:14px">${u.exam}</div><div style="font-size:12px;color:var(--saffron2);margin-top:3px">${u.date}</div></div>
+    </div>`).join('');
+  loadGovernmentJobs();
+  renderGovernmentJobs();
+}
+function filterGovt(cat,btn){
+  document.querySelectorAll('#govtTabs .stab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  activeGovCategory = cat;
+  renderGovt(cat);
+}
+
+// ════════════════════════════════════════════════════════════
+// PRIVATE SECTOR
+// ════════════════════════════════════════════════════════════
+function renderPvtSectors(){
+  document.getElementById('pvtSectorGrid').innerHTML=PVT_SECTORS.map(s=>`
+    <div class="sector-card" onclick="showPvtDetail('${s.id}')">
+      <div class="sc-icon">${s.icon}</div>
+      <div class="sc-name">${s.name}</div>
+      <div style="font-size:13px;color:var(--emerald2);font-weight:600">${s.salary}</div>
+      <div class="sc-tag pvt-tag">Growth: ${s.growth}</div>
+    </div>`).join('');
+}
+function showPvtDetail(id){
+  const s=PVT_SECTORS.find(x=>x.id===id); if(!s) return;
+  document.getElementById('pvtDetailCard').style.display='block';
+  document.getElementById('pvtDetailTitle').textContent=s.icon+' '+s.name+' — Deep Dive';
+  document.getElementById('pvtDetailContent').innerHTML=`
+    <div class="grid3" style="margin-bottom:18px;">
+      <div style="background:var(--card2);border-radius:var(--r2);padding:16px;text-align:center"><div style="font-family:'Clash Display',sans-serif;font-size:22px;font-weight:700;color:var(--violet2)">${s.salary}</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Salary Range</div></div>
+      <div style="background:var(--card2);border-radius:var(--r2);padding:16px;text-align:center"><div style="font-family:'Clash Display',sans-serif;font-size:22px;font-weight:700;color:var(--emerald2)">${s.growth}</div><div style="font-size:12px;color:var(--muted);margin-top:4px">YoY Growth</div></div>
+      <div style="background:var(--card2);border-radius:var(--r2);padding:16px;text-align:center"><div style="font-family:'Clash Display',sans-serif;font-size:22px;font-weight:700;color:var(--amber2)">${s.roles.length}+</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Role Types</div></div>
+    </div>
+    <div class="grid2">
+      <div><h4 style="font-size:13px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Top Roles</h4><div style="display:flex;flex-wrap:wrap;gap:7px">${s.roles.map(r=>`<span class="badge b-violet">${r}</span>`).join('')}</div></div>
+      <div><h4 style="font-size:13px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Hot Skills</h4><div style="display:flex;flex-wrap:wrap;gap:7px">${s.hotSkills.map(r=>`<span class="badge b-high">${r}</span>`).join('')}</div></div>
+    </div>
+    <div style="margin-top:16px"><h4 style="font-size:13px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Top Hiring Companies</h4><div style="display:flex;flex-wrap:wrap;gap:7px">${s.topCompanies.map(c=>`<span style="background:var(--ink3);border:1px solid var(--border2);padding:5px 13px;border-radius:20px;font-size:13px">${c}</span>`).join('')}</div></div>`;
+  document.getElementById('pvtDetailCard').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// ════════════════════════════════════════════════════════════
+// STUDENT CORNER
+// ════════════════════════════════════════════════════════════
+function filterStudent(tab,btn){
+  if(btn){document.querySelectorAll('#sec-student .stab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+  renderStudent(tab);
+}
+function renderStudent(tab){
+  const c=document.getElementById('studentContent');
+  if(tab==='scholarships'){
+    c.innerHTML=`<div class="scheme-cards">${SCHOLARSHIP_DATA.map(s=>`
+      <div class="scheme-card">
+        <div class="sc2-icon">🏅</div>
+        <div class="sc2-title">${s.name}</div>
+        <div class="sc2-desc">${s.who}</div>
+        <div class="sc2-meta">
+          <span class="badge b-high">💰 ${s.amt}</span>
+          <span class="badge b-gov">📅 ${s.deadline}</span>
+          <span class="badge b-violet">${s.type}</span>
+        </div>
+      </div>`).join('')}</div>`;
+  } else if(tab==='entrance'){
+    c.innerHTML=`<div style="overflow-x:auto"><table class="exam-table">
+      <thead><tr><th>Exam</th><th>Field</th><th>Conducting Body</th><th>Level</th><th>Attempts</th><th>Seats</th></tr></thead>
+      <tbody>${ENTRANCE_EXAMS.map(e=>`<tr>
+        <td style="font-weight:600;color:var(--violet2)">${e.exam}</td>
+        <td>${e.field}</td>
+        <td style="color:var(--muted)">${e.conducting}</td>
+        <td><span class="badge b-gov">${e.level}</span></td>
+        <td style="color:var(--muted)">${e.attempts}</td>
+        <td style="color:var(--emerald2);font-weight:600">${e.seats}</td>
+      </tr>`).join('')}</tbody>
+    </table></div>`;
+  } else if(tab==='after12'){
+    const paths=[
+      {icon:'⚗️',name:'Engineering (B.Tech)',via:'JEE Main/Advanced',duration:'4 years',cost:'₹2–15L total',salary:'₹4–60 LPA',exam:'JEE'},
+      {icon:'🔬',name:'MBBS / Medical',via:'NEET UG',duration:'5.5 years',cost:'₹5–50L total',salary:'₹8–40 LPA',exam:'NEET'},
+      {icon:'📊',name:'CA / CMA / CS',via:'ICAI/ICMAI/ICSI',duration:'3–5 years',cost:'₹50K–2L total',salary:'₹6–50 LPA',exam:'CA Foundation'},
+      {icon:'⚖️',name:'BA LLB (Law)',via:'CLAT/LSAT',duration:'5 years',cost:'₹3–15L total',salary:'₹4–30 LPA',exam:'CLAT'},
+      {icon:'🎨',name:'Design (NID/NIFT)',via:'NID DAT/NIFT',duration:'4 years',cost:'₹4–10L total',salary:'₹4–20 LPA',exam:'NIFT/NID'},
+      {icon:'✈️',name:'Commerce / BBA',via:'Direct/IPMAT',duration:'3 years',cost:'₹1–8L total',salary:'₹3–15 LPA',exam:'Various'},
+      {icon:'🏛️',name:'Arts/Humanities',via:'CUET/Direct',duration:'3 years',cost:'₹50K–5L total',salary:'₹2–12 LPA',exam:'CUET'},
+      {icon:'🌐',name:'Study Abroad',via:'SAT/IELTS/TOEFL',duration:'3–4 years',cost:'₹20–60L total',salary:'$50K–120K USD',exam:'SAT/ACT'},
+    ];
+    c.innerHTML=`<div class="scheme-cards">${paths.map(p=>`
+      <div class="scheme-card">
+        <div class="sc2-icon">${p.icon}</div>
+        <div class="sc2-title">${p.name}</div>
+        <div class="sc2-desc">Via: ${p.via} · Duration: ${p.duration}</div>
+        <div class="sc2-meta">
+          <span class="badge b-violet">💰 ${p.salary}</span>
+          <span class="badge b-med">Cost: ${p.cost}</span>
+        </div>
+      </div>`).join('')}</div>`;
+  } else if(tab==='abroad'){
+    const countries=[
+      {flag:'🇺🇸',name:'USA',avg:'$40K–80K/yr',duration:'2–4 yrs',visa:'F-1',exams:'GRE/GMAT + TOEFL/IELTS',pros:'Best universities, OPT work visa'},
+      {flag:'🇨🇦',name:'Canada',avg:'CAD 25K–50K/yr',duration:'2–4 yrs',visa:'Study Permit',exams:'IELTS + GRE/GMAT',pros:'Post-study PR pathway easy'},
+      {flag:'🇬🇧',name:'UK',avg:'£20K–35K/yr',duration:'1–3 yrs',visa:'Tier 4',exams:'IELTS 6.5+',pros:'1-yr masters, strong brand'},
+      {flag:'🇩🇪',name:'Germany',avg:'Mostly FREE (public)',duration:'2 yrs (MSc)',visa:'Student Visa',exams:'IELTS/DAAD/German A1',pros:'Free tuition in most states'},
+      {flag:'🇦🇺',name:'Australia',avg:'AUD 25K–45K/yr',duration:'2–3 yrs',visa:'Subclass 500',exams:'IELTS 6.5+',pros:'Work 48hrs/fortnight'},
+      {flag:'🇸🇬',name:'Singapore',avg:'SGD 20K–40K/yr',duration:'1–2 yrs',visa:'SVP',exams:'GRE/GMAT + IELTS',pros:'Gateway to Asia jobs'},
+    ];
+    c.innerHTML=`<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">${countries.map(co=>`
+      <div class="scheme-card">
+        <div class="sc2-icon">${co.flag}</div>
+        <div class="sc2-title">${co.name}</div>
+        <div style="font-size:13px;color:var(--emerald2);font-weight:600;margin-bottom:8px">${co.avg}</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:4px">📝 ${co.exams}</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:10px">🕐 ${co.duration}</div>
+        <div class="sc2-desc">✅ ${co.pros}</div>
+        <div style="margin-top:10px"><span class="badge b-violet">Visa: ${co.visa}</span></div>
+      </div>`).join('')}</div>`;
+  } else if(tab==='placement'){
+    c.innerHTML=`
+      <div class="card">
+        <h3>📊 Campus Placement Predictor</h3>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:20px">Enter your details to predict placement probability at top companies</p>
+        <div class="row2">
+          <div class="fgroup"><label class="flabel">Current CGPA</label><input class="finput" id="pCgpa" type="number" placeholder="e.g. 8.5" step="0.1" min="4" max="10"></div>
+          <div class="fgroup"><label class="flabel">College Tier</label>
+            <select class="finput" id="pCollege">
+              <option value="1">Tier 1 (IIT/NIT/BITS)</option>
+              <option value="2">Tier 2 (State Engg)</option>
+              <option value="3">Tier 3 (Private Engg)</option>
+            </select>
+          </div>
+        </div>
+        <div class="fgroup"><label class="flabel">Skills / Languages Known</label><input class="finput" id="pPlaceSkill" placeholder="e.g. Python, DSA, React, SQL"></div>
+        <div class="fgroup"><label class="flabel">Internships Done</label>
+          <select class="finput" id="pIntern">
+            <option value="0">None</option>
+            <option value="1">1 Internship</option>
+            <option value="2">2 Internships</option>
+            <option value="3">3+ Internships</option>
+          </select>
+        </div>
+        <button class="submit submit-emerald" onclick="runPlacement()">📊 Predict My Placement</button>
+        <div id="placementResult" style="margin-top:18px;"></div>
+      </div>`;
+  }
+}
+
+function runPlacement(){
+  const cgpa=parseFloat(document.getElementById('pCgpa').value)||7;
+  const tier=parseInt(document.getElementById('pCollege').value)||2;
+  const skills=document.getElementById('pPlaceSkill').value;
+  const interns=parseInt(document.getElementById('pIntern').value)||0;
+  const skillCount=(skills.split(',').filter(s=>s.trim()).length);
+  let base=40;
+  if(cgpa>=9) base+=25; else if(cgpa>=8) base+=18; else if(cgpa>=7) base+=10; else if(cgpa>=6) base+=3;
+  if(tier===1) base+=20; else if(tier===2) base+=8;
+  base+=skillCount*4; base+=interns*8;
+  const score=Math.min(97,base);
+  const companies=score>85?['Google','Amazon','Microsoft','Flipkart']:score>70?['TCS','Infosys','Wipro','Cognizant','HCL']:score>55?['TCS','Infosys','Wipro','NIIT']:['Small startups','Service companies'];
+  const pkg=score>85?'₹10–20 LPA':score>70?'₹4–8 LPA':score>55?'₹3–5 LPA':'₹2.5–4 LPA';
+  document.getElementById('placementResult').innerHTML=`
+    <div class="result-glow">
+      <div class="rh">
+        <div><div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Placement Probability</div>
+          <div style="font-family:'Clash Display',sans-serif;font-size:36px;font-weight:700;color:${score>75?'var(--emerald2)':score>55?'var(--amber2)':'var(--rose2)'}">${score}%</div></div>
+        <div class="rconf">Expected: ${pkg}</div>
+      </div>
+      <div class="rexplain">Based on CGPA ${cgpa}, ${tierName(tier)} college, ${skillCount} skills, ${interns} internship(s), your placement probability is ${score}%. Companies likely to hire: ${companies.slice(0,3).join(', ')} and similar.</div>
+      <div style="margin-top:14px"><h4 style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Improve Your Score</h4>
+        ${score<90?`<div class="rstep"><div class="rstep-n">1</div><div class="rstep-t">Build 2-3 strong GitHub projects showcasing your skills</div></div>`:''}
+        ${interns<2?`<div class="rstep"><div class="rstep-n">2</div><div class="rstep-t">Do at least one paid internship — adds 8% to placement score</div></div>`:''}
+        ${skillCount<4?`<div class="rstep"><div class="rstep-n">3</div><div class="rstep-t">Learn DSA + System Design for product company interviews</div></div>`:''}
+        <div class="rstep"><div class="rstep-n">4</div><div class="rstep-t">Practice on LeetCode (100+ problems) and mock GD/PI rounds</div></div>
+      </div>
+    </div>`;
+}
+function tierName(t){return t==1?'Tier 1':t==2?'Tier 2':'Tier 3';}
+
+// ════════════════════════════════════════════════════════════
+// LOAN PREDICTOR
+// ════════════════════════════════════════════════════════════
+function updateLoanForm(){
+  const type=document.getElementById('lType').value;
+  let extra='';
+  if(type==='education') extra=`<div class="row2"><div class="fgroup"><label class="flabel">Course</label><input class="finput" id="lCourse" placeholder="e.g. B.Tech CSE at IIT Bombay"></div><div class="fgroup"><label class="flabel">Institute Type</label><select class="finput" id="lInstitute"><option value="iit">IIT/IIM/NIT</option><option value="private_top">Top Private (BITS/VIT)</option><option value="private">Other Private</option><option value="abroad">Study Abroad</option></select></div></div>`;
+  else if(type==='home') extra=`<div class="row2"><div class="fgroup"><label class="flabel">Property Value (₹)</label><input class="finput" id="lPropVal" placeholder="e.g. 5000000"></div><div class="fgroup"><label class="flabel">Property Type</label><select class="finput" id="lPropType"><option>Under Construction</option><option>Ready to Move</option><option>Resale</option><option>Plot</option></select></div></div>`;
+  else if(type==='vehicle') extra=`<div class="fgroup"><label class="flabel">Vehicle Type</label><select class="finput" id="lVeh"><option>New Car</option><option>Used Car</option><option>Two Wheeler</option><option>Commercial Vehicle</option></select></div>`;
+  document.getElementById('loanExtra').innerHTML=extra;
+}
+
+async function runLoan(){
+  const type=document.getElementById('lType').value;
+  const amount=parseFloat(document.getElementById('lAmount').value)||0;
+  const tenure=parseFloat(document.getElementById('lTenure').value)||1;
+  const income=parseFloat(document.getElementById('lIncome').value)||0;
+  const empType=document.getElementById('lEmpType').value;
+  const age=parseFloat(document.getElementById('lAge').value)||25;
+  const existEmi=parseFloat(document.getElementById('lExistEmi').value)||0;
+  const cibil=parseFloat(document.getElementById('lCibil').value)||750;
+
+  if(!type||!amount||!income){toast('Please fill Loan Type, Amount, and Income');return;}
+
+  document.getElementById('lLoading').classList.add('on');
+  document.getElementById('lResult').innerHTML='';
+
+  try{
+    const payload = {
+      loan_type: type,
+      amount,
+      tenure_years: tenure,
+      monthly_income: income,
+      employment_type: empType,
+      age: Math.round(age),
+      existing_emis: existEmi,
+      cibil_score: Math.round(cibil),
+      property_value: parseFloat(document.getElementById('lPropVal')?.value || '0') || undefined,
+      institute_type: document.getElementById('lInstitute')?.value || undefined
+    };
+
+    const apiResult = await apiRequest('/loan/predict', { method:'POST', body: payload });
+    const normalized = {
+      score: Math.round(apiResult.eligibility_score || 0),
+      eligible: !!apiResult.is_eligible,
+      emi: Math.round(apiResult.emi_amount || 0),
+      totalPayable: Math.round(apiResult.total_payable || 0),
+      totalInterest: Math.round(apiResult.total_interest || 0),
+      maxEligible: Math.round(apiResult.max_eligible_amount || 0),
+      banks: (apiResult.recommended_banks || []).map(b => b.bank_name),
+      reasons: apiResult.improvement_tips || [],
+      rateRange: apiResult.annual_interest_rate ? `${apiResult.annual_interest_rate}%` : '10-18%'
+    };
+
+    displayLoan(normalized,{type,amount,tenure,income});
+  }catch(err){
+    const result=calcLoan({type,amount,tenure,income,empType,age,existEmi,cibil});
+    displayLoan(result,{type,amount,tenure,income});
+    toast(`Using offline loan model: ${err.message}`);
+  }finally{
+    document.getElementById('lLoading').classList.remove('on');
+  }
+}
+function calcLoan({type,amount,tenure,income,empType,age,existEmi,cibil}){
+  // Eligibility scoring
+  let score=50;
+  // CIBIL
+  if(cibil>=750) score+=25; else if(cibil>=700) score+=15; else if(cibil>=650) score+=5; else if(cibil<600) score-=20;
+  // Income check (FOIR should be <50%)
+  const maxEmi=income*0.50-existEmi;
+  // Rate by type
+  const rates={education:8.5,home:8.5,personal:12,vehicle:9.5,business:14,gold:9};
+  const rate=(rates[type]||10)/100/12;
+  const n=tenure*12;
+  const emi=n>0?Math.round(amount*rate*Math.pow(1+rate,n)/(Math.pow(1+rate,n)-1)):Math.round(amount/12);
+  const canAfford=emi<=maxEmi;
+  if(canAfford) score+=15; else score-=15;
+  // Employment
+  if(empType==='salaried_govt') score+=15;
+  else if(empType==='salaried_pvt') score+=10;
+  else if(empType==='self_employed') score+=5;
+  else if(empType==='student') score+=type==='education'?10:-5;
+  // Age
+  if(age>=25&&age<=45) score+=8; else if(age<22||age>55) score-=5;
+  // Type-specific
+  if(type==='education'&&amount<=1500000) score+=10;
+  if(type==='home'&&amount<=5000000) score+=5;
+  score=Math.max(10,Math.min(98,score));
+  const eligible=score>=55;
+  const maxEligible=Math.round((income*0.5-existEmi)*(Math.pow(1+rate,n)-1)/(rate*Math.pow(1+rate,n)));
+  // Interest total
+  const totalPayable=Math.round(emi*n);
+  const totalInterest=totalPayable-amount;
+  // Banks
+  const govtBanks=['SBI','Bank of Baroda','Punjab National Bank','Canara Bank','Union Bank'];
+  const pvtBanks=['HDFC Bank','ICICI Bank','Axis Bank','Kotak Mahindra','IDFC First'];
+  const allBanks=[...govtBanks,...pvtBanks].slice(0,4);
+  const rateRanges={education:'8.1–11.5%',home:'8.4–9.5%',personal:'10.5–18%',vehicle:'8.7–12%',business:'12–20%',gold:'8.9–12%'};
+  const reasons=[];
+  if(cibil<700) reasons.push('Low CIBIL score — improve to 750+ for better rates');
+  if(!canAfford) reasons.push(`EMI (₹${emi.toLocaleString()}) exceeds 50% of income — consider smaller amount`);
+  if(existEmi>income*0.3) reasons.push('High existing EMI burden — pay off before new loan');
+  if(age<21) reasons.push('Age requirement: most loans need 21+ years');
+  return {score,eligible,emi,totalPayable,totalInterest,maxEligible,banks:allBanks,reasons,rateRange:rateRanges[type]||'10-18%'};
+}
+
+function displayLoan(r,meta){
+  const statusColor=r.eligible?'var(--emerald2)':'var(--rose2)';
+  const statusText=r.eligible?'✅ Likely Eligible':'⚠️ Improve Profile';
+  const banks=r.banks;
+  document.getElementById('lResult').innerHTML=`
+    <div class="loan-result">
+      <div class="rh">
+        <div>
+          <div style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Loan Eligibility Score</div>
+          <div style="font-family:'Clash Display',sans-serif;font-size:36px;font-weight:700;color:${statusColor}">${r.score}/100</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:20px;font-weight:700;color:${statusColor};margin-bottom:6px">${statusText}</div>
+          <div class="badge b-loan">Interest: ${r.rateRange}</div>
+        </div>
+      </div>
+      <div class="loan-grid">
+        <div class="lkpi"><div class="lkpi-v">₹${r.emi.toLocaleString()}</div><div class="lkpi-l">Monthly EMI</div></div>
+        <div class="lkpi"><div class="lkpi-v">₹${(r.totalInterest/100000).toFixed(1)}L</div><div class="lkpi-l">Total Interest</div></div>
+        <div class="lkpi"><div class="lkpi-v">₹${(r.maxEligible/100000).toFixed(1)}L</div><div class="lkpi-l">Max Eligible</div></div>
+      </div>
+      <div style="margin-top:22px">
+        <h4 style="font-size:13px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px">Recommended Banks</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          ${banks.map((b,i)=>`<div style="background:var(--card2);border:1px solid var(--border2);border-radius:var(--r2);padding:10px 16px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;border-radius:50%;background:${i<2?'var(--emerald)':'var(--sky)'};display:inline-block"></span>${b}</div>`).join('')}
+        </div>
+      </div>
+      ${r.reasons.length?`<div style="margin-top:20px"><h4 style="font-size:13px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">⚠️ Improve Your Chances</h4>${r.reasons.map(reason=>`<div class="rstep"><div class="rstep-n" style="background:rgba(231,76,60,0.2);color:var(--rose2)">!</div><div class="rstep-t">${reason}</div></div>`).join('')}</div>`:''}
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--muted);">
+        💡 <strong>Tip:</strong> Apply at 2-3 banks simultaneously. Govt banks (SBI, BoB) offer lower rates. ${meta.type==='education'?'Education loans under ₹7.5L need no collateral (Govt banks).':meta.type==='home'?'Home loans get ₹1.5L tax deduction under Sec 24(b).':'Improve CIBIL by clearing dues on time.'}
+      </div>
+    </div>`;
+  saveHist('Loan Predictor', (meta.type||'Loan')+' — ₹'+(meta.amount/100000).toFixed(1)+'L', r);
+  toast('Loan analysis complete! ✓');
+}
+
+// ════════════════════════════════════════════════════════════
+// LIFE DECISION AI
+// ════════════════════════════════════════════════════════════
+async function runDecision(){
+  const role=document.getElementById('dRole').value;
+  const industry=document.getElementById('dIndustry').value;
+  const salary=parseFloat(document.getElementById('dSalary').value)||0;
+  const exp=parseFloat(document.getElementById('dExp').value)||0;
+  const goal=document.getElementById('dGoal').value;
+  const sat=parseFloat(document.getElementById('dSat').value);
+  const dem=parseFloat(document.getElementById('dDem').value);
+  const context=document.getElementById('dContext').value;
+
+  if(!role||!goal){toast('Please select Role and Goal');return;}
+
+  document.getElementById('dLoading').classList.add('on');
+  document.getElementById('dResult').innerHTML='';
+
+  try{
+    const payload = {
+      current_role: role,
+      industry,
+      monthly_salary: salary,
+      experience_years: exp,
+      skills: dSkills,
+      primary_goal: goal,
+      satisfaction_score: sat,
+      demand_score: dem,
+      additional_context: context
+    };
+    const res = await apiRequest('/decision/analyze', { method:'POST', body: payload });
+    displayDecision(res,{role,goal,salary,sat,dem,exp,industry});
+  }catch(err){
+    toast(err.message || 'Using offline decision model');
+    displayDecision(null,{role,goal,salary,sat,dem,exp,industry});
+  }finally{
+    document.getElementById('dLoading').classList.remove('on');
+  }
+}
+function displayDecision(raw,d){
+  let p=null;
+  if(raw && typeof raw === "object") p=raw;
+  else if(raw){
+    try{p=JSON.parse(raw.replace(/```json\n?/g,"").replace(/```/g,""));}
+    catch(_){p=null;}
+  }
+  if(!p) p=ruleDecision(d);
+  const rc=p.risk_level==='Low'?'var(--emerald2)':p.risk_level==='Medium'?'var(--amber2)':'var(--rose2)';
+  document.getElementById('dResult').innerHTML=`
+    <div class="result-glow">
+      <div class="rh">
+        <div>
+          <div style="font-size:11px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:7px">AI Recommendation</div>
+          <div class="rtitle">✨ ${p.recommendation}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+          <div class="rconf">⚡ ${p.confidence}% confident</div>
+          <span class="badge b-med">⏱ ${p.timeline}</span>
+          <span class="badge" style="background:rgba(255,255,255,0.05);color:${rc};border:1px solid ${rc}40">Risk: ${p.risk_level}</span>
+        </div>
+      </div>
+      <div class="rexplain">${p.reasoning}</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+        <span class="badge b-high">💰 ${p.salary_potential}</span>
+        ${p.sector_tip?`<span class="badge b-violet">🇮🇳 ${p.sector_tip}</span>`:''}
+      </div>
+      <div>
+        <h4 style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:12px">Your Action Plan</h4>
+        ${(p.action_steps||[]).map((s,i)=>`<div class="rstep"><div class="rstep-n">${i+1}</div><div class="rstep-t">${s}</div></div>`).join('')}
+      </div>
+    </div>`;
+  saveHist('Life Decision',p.recommendation,p); toast('AI analysis complete! ✓');
+}
+
+function ruleDecision({role,goal,salary,sat,dem,exp,industry}){
+  const low=salary<50000, highDem=dem>=7, unhappy=sat<=4, govtIndustry=(industry||'').includes('govt')||role==='Government Employee';
+  let rec,conf,reason,steps,timeline,salPot,risk,tip;
+  if(goal==='govt'||govtIndustry){
+    rec='Prepare Seriously for Government Exams';conf=83;
+    reason=`Government jobs in India offer unmatched security, pension, DA, and social status. With your background in ${role||'your field'}, you have strong prospects in SSC CGL, IBPS PO, or UPSC depending on qualification. Average govt salary ₹7-15L + perks.`;
+    steps=['Identify top 2 exams matching your qualification','Create a 6-month structured study plan (3-4 hrs/day)','Join a coaching institute or get quality online resources','Practice previous papers — last 5 years minimum'];
+    timeline='6–18 months';salPot='₹5–25 LPA + pension + perks';risk='Low';tip='Jan–Apr is peak govt exam season — start now';
+  } else if(goal==='money'&&low&&highDem){
+    rec='Switch to a Higher-Paying Role Now';conf=90;
+    reason=`Your current salary of ₹${salary.toLocaleString()}/month is significantly below market rate, while your skills have a demand score of ${dem}/10. This is the ideal window to negotiate a 40-60% hike. Indian tech market is booming — Bengaluru/Hyderabad roles paying 2x are easily accessible.`;
+    steps=['Update LinkedIn & polish resume with quantified achievements','Apply to 10-15 companies on Naukri, LinkedIn, and Instahyre','Prepare DSA (LeetCode 75) + System Design fundamentals','Target 40-50% salary hike — it is standard in current market'];
+    timeline='2–4 months';salPot=`₹${Math.round(salary*1.4/1000)}K–₹${Math.round(salary*1.65/1000)}K/month`;risk='Low';tip='Product companies (Razorpay, CRED, Swiggy) pay 50% more than service companies';
+  } else if(goal==='abroad'){
+    rec='Build Profile for International Opportunities';conf=78;
+    reason=`Working abroad multiplies your salary 5-10x in USD/EUR. Germany offers free education for MS, Canada has the best PR pathway, and the USA remains the top destination for tech. You need 2-3 years of Indian experience + strong GitHub + certifications.`;
+    steps=['Target Germany MS (nearly free) or Canada PR pathway first','Get AWS/GCP/Azure certification (international companies require it)','Build strong GitHub portfolio with 3+ significant projects','Apply to MNCs in India for potential overseas transfer (IBM, Accenture, Infosys abroad)'];
+    timeline='12–24 months';salPot='$70,000–$130,000/year';risk='Medium';tip='Germany Blue Card + Canada PR are easiest visa routes for Indians';
+  } else if(goal==='startup'){
+    rec='Validate Idea First, Then Make the Leap';conf=74;
+    reason=`India's startup ecosystem is thriving with 100+ unicorns. However, 90% startups fail in 2 years. The right approach is to validate your idea with minimal investment, build a prototype, and get your first 10 customers before quitting your job. Build a 12-month financial runway.`;
+    steps=['Define your unique value proposition and target customer','Build MVP in 30 days — no fancy features, just core value','Get 10 paying customers before leaving your job','Apply to Y Combinator, Antler India, or Sequoia Surge for funding'];
+    timeline='6–18 months';salPot='₹0 to ∞ — depends on execution';risk='High';tip='DPIIT startup registration gives tax benefits and government tenders access';
+  } else if(goal==='passion'&&unhappy){
+    rec='Strategic Career Pivot — Plan It Right';conf=76;
+    reason=`Your satisfaction score of ${sat}/10 signals serious misalignment. Staying in a role you hate has compounding negative effects — health, performance, and opportunity cost. A structured pivot plan over 6 months significantly reduces financial risk while opening the door to meaningful work.`;
+    steps=['Map passion to viable careers with ₹8L+ salary potential','Build 6-month emergency fund before making the switch','Learn new skills on weekends (online courses + projects)','Network in target industry through LinkedIn + meetups'];
+    timeline='6–12 months';salPot='Initial 10-15% drop, then rapid growth';risk='Medium';tip='EdTech, product design, and content creation are booming passion careers in India';
+  } else {
+    rec='Focused Upskilling for Career Acceleration';conf=72;
+    reason=`Your profile shows solid fundamentals but needs targeted enhancement to reach the next level. The Indian market rewards specialists — becoming the go-to expert in 2-3 high-demand skills can double your income in 18 months. Focus on measurable skill gaps.`;
+    steps=['Identify your #1 highest-ROI skill gap (ask seniors, check job postings)','Complete one certification in that skill (Coursera/Udemy)','Build one portfolio project demonstrating the new skill','Apply for roles at 20% salary premium over current CTC'];
+    timeline='3–9 months';salPot='25-45% salary growth in 12 months';risk='Low';tip='NASSCOM reports AI/ML adds ₹3-6L premium on any tech role — consider adding it';
+  }
+  return{recommendation:rec,confidence:conf,reasoning:reason,action_steps:steps,timeline,salary_potential:salPot,risk_level:risk,sector_tip:tip};
+}
+
+// ════════════════════════════════════════════════════════════
+// CAREER PREDICTOR
+// ════════════════════════════════════════════════════════════
+async function runCareer(){
+  const edu=document.getElementById('cEdu').value;
+  const field=document.getElementById('cField').value;
+  const style=document.getElementById('cStyle').value;
+  const salary=document.getElementById('cSalary').value;
+  if(!edu||cSkills.length===0){toast('Please add education and at least one skill');return;}
+
+  document.getElementById('cLoading').classList.add('on');
+  document.getElementById('cResult').innerHTML='';
+
+  try{
+    const payload = {
+      skills: cSkills,
+      interests: selInterests,
+      education: edu,
+      field,
+      work_style: style,
+      target_salary: salary,
+      include_government: true
+    };
+    const res = await apiRequest('/career/predict', { method:'POST', body: payload });
+    showCareerResult(res);
+  }catch(err){
+    toast(err.message || 'Using offline career model');
+    showCareerResult(null);
+  }finally{
+    document.getElementById('cLoading').classList.remove('on');
+  }
+}
+function showCareerResult(raw){
+  let p=null;
+  if(raw && typeof raw === "object") p=raw;
+  else if(raw){
+    try{p=JSON.parse(raw.replace(/```json\n?/g,"").replace(/```/g,""));}
+    catch(_){p=null;}
+  }
+  if(!p || !Array.isArray(p.careers)) p=ruleCareer();
+
+  const demCls={High:'b-high',Medium:'b-med',Low:'b-low'};
+  const secCls={'Private':'b-pvt','Government':'b-gov','Both':'b-violet'};
+
+  document.getElementById('cResult').innerHTML=`
+    <div style="margin-top:8px">
+      <div style="font-family:'Clash Display',sans-serif;font-size:20px;font-weight:700;margin-bottom:5px">Your Top 5 Career Paths</div>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:18px">Ranked by AI compatibility score — based on your skills, interests & market demand</p>
+      <div class="cpath-cards">
+        ${(p.careers||[]).map((c,i)=>`
+          <div class="cpath-card" style="animation-delay:${i*0.08}s">
+            <div>
+              <div class="cp-rank">#${c.rank}</div>
+              <div class="cp-title">${c.title}</div>
+              <div class="cp-meta">
+                <span class="badge ${demCls[c.demand]||'b-med'}">⚡ ${c.demand} Demand</span>
+                <span class="badge b-violet">💰 ${c.salary_range}</span>
+                <span class="badge b-med">📈 ${c.growth_rate}</span>
+                ${c.sector?`<span class="badge ${secCls[c.sector]||'b-violet'}">${c.sector==='Government'?'🏛️':'💼'} ${c.sector}</span>`:''}
+              </div>
+              <div class="cp-desc">${c.description}</div>
+              <div style="margin-bottom:12px">
+                <div style="font-size:11px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:7px">Skills to Acquire</div>
+                <div class="gap-items">${(c.skills_gap||[]).map(s=>`<span class="gap-item">${s}</span>`).join('')}</div>
+              </div>
+              ${c.top_companies?`<div><div style="font-size:11px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:7px">Top Hiring Companies</div><div style="display:flex;flex-wrap:wrap;gap:6px">${c.top_companies.map(co=>`<span style="background:var(--ink3);border:1px solid var(--border2);padding:3px 11px;border-radius:20px;font-size:12px">${co}</span>`).join('')}</div></div>`:''}
+            </div>
+            <div class="cp-score">
+              <div class="cp-pct">${c.match_score}%</div>
+              <div class="cp-plbl">Match</div>
+              <div class="pbar"><div class="pfill" style="width:${c.match_score}%"></div></div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  saveHist('Career Predictor',p.careers?.[0]?.title||'Career Paths',p); toast('Career paths predicted! ✓');
+}
+
+function ruleCareer(){
+  const DB=[
+    {title:'ML / AI Engineer',kw:['python','ml','tensorflow','pytorch','ai','machine learning','data','nlp','deep learning'],demand:'High',salary:'₹12–45 LPA',gap:['Deep Learning','LLMOps','Transformers'],growth:'+67% by 2026',sector:'Private',companies:['Google','Microsoft','OpenAI India','Fractal Analytics','Ola Krutrim']},
+    {title:'Full Stack Developer',kw:['react','javascript','node','html','css','vue','angular','next','typescript','express'],demand:'High',salary:'₹8–28 LPA',gap:['TypeScript','System Design','Docker','GraphQL'],growth:'+28% by 2026',sector:'Private',companies:['Swiggy','Razorpay','Zepto','Meesho','Groww']},
+    {title:'Data Scientist / Analyst',kw:['python','sql','tableau','excel','data','analytics','r','pandas','numpy','power bi'],demand:'High',salary:'₹10–30 LPA',gap:['Spark','MLflow','Causal Inference'],growth:'+45% by 2026',sector:'Both',companies:['Amazon','Walmart Labs','PhonePe','Paytm','Flipkart']},
+    {title:'Cloud / DevOps Engineer',kw:['aws','azure','gcp','cloud','devops','kubernetes','docker','terraform','linux','ci/cd'],demand:'High',salary:'₹14–40 LPA',gap:['FinOps','Platform Engg','SRE'],growth:'+52% by 2026',sector:'Private',companies:['Amazon','Microsoft','Google','IBM','Informatica']},
+    {title:'IAS / Civil Services Officer',kw:['ias','upsc','civil','governance','gk','polity','history','geography','current affairs'],demand:'High',salary:'₹56K–2.5L/month',gap:['Essay Writing','Ethics Paper','Interview Skills'],growth:'Stable govt',sector:'Government',companies:['Government of India','State Governments','PSUs']},
+    {title:'Product Manager',kw:['product','agile','scrum','roadmap','jira','analytics','management','ux','strategy','growth'],demand:'Medium',salary:'₹12–35 LPA',gap:['SQL for PM','User Research','Metrics Design'],growth:'+22% by 2026',sector:'Private',companies:['Ola','Uber India','Groww','CRED','Meesho']},
+    {title:'Cybersecurity Analyst',kw:['security','network','ethical hacking','penetration','kali','firewall','siem','cissp','soc'],demand:'High',salary:'₹10–32 LPA',gap:['Cloud Security','SIEM Tools','Zero Trust'],growth:'+38% by 2026',sector:'Both',companies:['TCS CyberSec','IBM Security','Palo Alto','Check Point']},
+    {title:'UI/UX Designer',kw:['figma','design','sketch','ux','ui','adobe xd','prototype','wireframe','user research','canva'],demand:'Medium',salary:'₹6–22 LPA',gap:['Motion Design','Design Systems','UX Research'],growth:'+24% by 2026',sector:'Private',companies:['Razorpay','Swiggy','Urban Company','Meesho','Lenskart']},
+    {title:'Banking / Finance Professional (IBPS/SBI)',kw:['banking','finance','accounting','tally','excel','ibps','sbi','ca','cfa','economics','commerce'],demand:'High',salary:'₹5–20 LPA',gap:['FinTech Tools','Python for Finance','Risk Analysis'],growth:'+18%',sector:'Both',companies:['SBI','HDFC','ICICI','Kotak','RBI']},
+    {title:'Content Creator / Digital Marketer',kw:['writing','content','seo','social media','marketing','youtube','blogging','copywriting','video'],demand:'Medium',salary:'₹4–18 LPA',gap:['Analytics','Paid Ads','Personal Brand'],growth:'+35% by 2026',sector:'Private',companies:['Unacademy','ShareChat','Dailyhunt','Byjus','Startups']},
+  ];
+  const lower=cSkills.map(s=>s.toLowerCase());
+  const scored=DB.map(c=>{
+    let s=0;
+    c.kw.forEach(k=>{if(lower.some(x=>x.includes(k)||k.includes(x)))s+=10;});
+    if(selInterests.some(i=>c.title.toLowerCase().includes(i.toLowerCase())))s+=12;
+    return{...c,match_score:Math.min(97,48+s+Math.floor(Math.random()*8))};
+  }).sort((a,b)=>b.match_score-a.match_score).slice(0,5).map((c,i)=>({
+    rank:i+1,title:c.title,match_score:c.match_score,demand:c.demand,salary_range:c.salary,
+    description:`Strong career match for your profile with excellent growth in India's job market. This role offers competitive compensation and advancement opportunities.`,
+    skills_gap:c.gap,growth_rate:c.growth,top_companies:c.companies,sector:c.sector
+  }));
+  return{careers:scored};
+}
+
+// ════════════════════════════════════════════════════════════
+// CLAUDE AI
+// ════════════════════════════════════════════════════════════
+async function callAI(prompt){
+  throw new Error("Direct browser AI provider call is disabled. Use backend APIs.");
+}
+
+// ════════════════════════════════════════════════════════════
+// HISTORY
+// ════════════════════════════════════════════════════════════
+function saveHist(type,title,data){
+  if(!user)return;
+  const createdAt = new Date().toISOString();
+  const entry = {
+    id: `loc-${Date.now()}-${Math.floor(Math.random()*1000)}`,
+    type,
+    title,
+    data,
+    created_at: createdAt,
+    date: formatHistoryDate(createdAt),
+    source: 'local'
+  };
+  history = mergeHistoryItems([entry], history).slice(0,50);
+  persistHistoryLocal();
+  const kpiAnalyses = document.getElementById('kpiAnalyses');
+  if(kpiAnalyses) kpiAnalyses.textContent = history.length;
+  if(type==='Career Predictor'){
+    const best = document.getElementById('kpiBest');
+    if(best) best.textContent = title.slice(0,14);
+  }
+  renderHistory();
+}
+
+function getHistoryStorageKey(targetUser=user){
+  const identifier = targetUser?.id || targetUser?.email || 'guest';
+  return `pm2_hist_${identifier}`;
+}
+
+function formatHistoryDate(value){
+  const dt = value ? new Date(value) : new Date();
+  if(Number.isNaN(dt.getTime())){
+    return new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  }
+  return dt.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+}
+
+function loadLocalHistory(targetUser=user){
+  if(!targetUser) return [];
+  const idKey = getHistoryStorageKey(targetUser);
+  const emailKey = targetUser.email ? `pm2_hist_${targetUser.email}` : null;
+
+  let raw = localStorage.getItem(idKey);
+  if(!raw && emailKey){
+    const legacy = localStorage.getItem(emailKey);
+    if(legacy){
+      raw = legacy;
+      localStorage.setItem(idKey, legacy);
+    }
+  }
+
+  if(!raw) return [];
+  try{
+    const parsed = JSON.parse(raw);
+    if(!Array.isArray(parsed)) return [];
+    return parsed.map((item, idx) => {
+      const createdAt = item.created_at || new Date().toISOString();
+      return {
+        id: item.id || `loc-legacy-${idx}`,
+        type: item.type || 'Analysis',
+        title: item.title || 'Saved Analysis',
+        data: item.data || {},
+        created_at: createdAt,
+        date: item.date || formatHistoryDate(createdAt),
+        source: item.source || 'local',
+        server_id: item.server_id,
+        server_type: item.server_type
+      };
+    });
+  }catch(_){
+    return [];
+  }
+}
+
+function persistHistoryLocal(){
+  if(!user) return;
+  localStorage.setItem(getHistoryStorageKey(user), JSON.stringify(history));
+}
+
+function mergeHistoryItems(primary, secondary){
+  const all = [...primary, ...secondary];
+  const map = new Map();
+  for(const item of all){
+    const stamp = (item.created_at || item.date || '').toString().slice(0,16);
+    const key = `${item.type || ''}|${item.title || ''}|${stamp}`;
+    if(!map.has(key)) map.set(key, item);
+  }
+  return Array.from(map.values()).sort((a,b) => {
+    const aTime = new Date(a.created_at || a.date || 0).getTime();
+    const bTime = new Date(b.created_at || b.date || 0).getTime();
+    return bTime - aTime;
+  });
+}
+
+async function syncHistoryFromBackend(){
+  if(!user) return;
+  try{
+    const res = await apiRequest('/user/history');
+    const items = Array.isArray(res?.items) ? res.items : [];
+    const serverItems = items.map((it) => {
+      const isCareer = it.type === 'Career Predictor';
+      const createdAt = it.date || new Date().toISOString();
+      return {
+        id: isCareer ? `srv-career-${it.id}` : `srv-decision-${it.id}`,
+        type: it.type || 'Analysis',
+        title: it.title || 'Saved Analysis',
+        data: {},
+        created_at: createdAt,
+        date: formatHistoryDate(createdAt),
+        source: 'server',
+        server_id: it.id,
+        server_type: isCareer ? 'career' : 'decision'
+      };
+    });
+
+    history = mergeHistoryItems(serverItems, history).slice(0,50);
+    persistHistoryLocal();
+    renderHistory();
+  }catch(_){
+    // keep local history when backend history is unavailable
+  }
+}
+
+function renderHistory(){
+  const c=document.getElementById('histList');
+  if(!history.length){c.innerHTML='<div class="empty"><div class="eicon">📋</div><p>No analyses yet.</p></div>';return;}
+  c.innerHTML=history.map(h=>{
+    const safeId = String(h.id).replace(/'/g, "\\'");
+    return `<div class="hist-item" onclick="viewHist('${safeId}')"><div><div class="hist-type">${h.type}</div><div class="hist-title">${h.title}</div></div><div class="hist-date">${h.date}</div></div>`;
+  }).join('');
+}
+async function viewHist(id){
+  const h=history.find(x=>String(x.id)===String(id));if(!h)return;
+
+  if(h.type==='Life Decision'){
+    showSection('decision');
+    if(h.server_type==='decision' && h.server_id){
+      try{
+        const decision = await apiRequest(`/decision/${h.server_id}`);
+        displayDecision(decision,{});
+        return;
+      }catch(_){ }
+    }
+    if(h.data && Object.keys(h.data).length){
+      document.getElementById('dResult').innerHTML=renderSavedDecision(h.data);
+    }else{
+      toast('Detailed decision data not found for this entry');
+    }
+    return;
+  }
+
+  if(h.type==='Career Predictor'){
+    showSection('career');
+    if(h.server_type==='career' && h.server_id){
+      try{
+        const career = await apiRequest(`/career/${h.server_id}`);
+        showCareerResult(career);
+        return;
+      }catch(_){ }
+    }
+    if(h.data && h.data.careers){
+      showCareerResult(h.data);
+    }else{
+      toast('Detailed career data not found for this entry');
+    }
+    return;
+  }
+
+  if(h.type==='Loan Predictor'){
+    showSection('loan');
+    if(h.data && h.data.score){
+      displayLoan(h.data,{type:'loan',amount:h.data.amount || 0,tenure:h.data.tenure || 0,income:h.data.income || 0});
+    }
+  }
+}
+
+async function clearHistory(){
+  if(!user) return;
+  const ok = confirm('Clear all history? This will remove saved entries from this account.');
+  if(!ok) return;
+
+  try{
+    await apiRequest('/user/history', { method:'DELETE' });
+  }catch(_){
+    // still clear local history even if backend delete fails
+  }
+
+  history = [];
+  persistHistoryLocal();
+  if(user.email){
+    localStorage.removeItem(`pm2_hist_${user.email}`);
+  }
+  const kpiAnalyses = document.getElementById('kpiAnalyses');
+  if(kpiAnalyses) kpiAnalyses.textContent = '0';
+  renderHistory();
+  toast('History cleared');
+}
+function renderSavedDecision(d){return`<div class="result-glow"><div class="rh"><div><div class="rtitle">✨ ${d.recommendation}</div></div><div class="rconf">⚡ ${d.confidence}% confident</div></div><div class="rexplain">${d.reasoning}</div></div>`;}
+
+// ════════════════════════════════════════════════════════════
+// CHARTS
+// ════════════════════════════════════════════════════════════
+function initCharts(){
+  if(chartsInited)return; chartsInited=true;
+  const opt={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#7070a0',font:{family:"'Cabinet Grotesk'"},boxWidth:12}}},scales:{x:{ticks:{color:'#4a4a70',font:{family:"'Cabinet Grotesk'",size:11}},grid:{color:'rgba(255,255,255,0.03)'}},y:{ticks:{color:'#4a4a70',font:{family:"'Cabinet Grotesk'",size:11}},grid:{color:'rgba(255,255,255,0.03)'}}}};
+  new Chart(document.getElementById('ch1'),{type:'bar',data:{labels:['AI/ML','Cybersec','Cloud','DevOps','React','Python','Flutter','Rust'],datasets:[{label:'Demand',data:[95,82,88,79,77,74,62,58],backgroundColor:['rgba(124,111,239,0.85)','rgba(231,76,60,0.75)','rgba(52,152,219,0.75)','rgba(46,204,113,0.75)','rgba(243,156,18,0.75)','rgba(124,111,239,0.6)','rgba(52,152,219,0.55)','rgba(253,121,168,0.7)'],borderRadius:8,borderSkipped:false}]},options:{...opt,plugins:{legend:{display:false}},indexAxis:'y'}});
+  new Chart(document.getElementById('ch2'),{type:'bar',data:{labels:['ML Eng','Cloud Arch','SDE-3','DevOps','Data Sci','PM','UI/UX','BA'],datasets:[{label:'Min ₹LPA',data:[12,15,10,12,10,12,6,6],backgroundColor:'rgba(124,111,239,0.4)',borderRadius:4},{label:'Max ₹LPA',data:[45,50,28,40,32,38,22,20],backgroundColor:'rgba(46,204,113,0.7)',borderRadius:4}]},options:{...opt}});
+  new Chart(document.getElementById('ch3'),{type:'line',data:{labels:['2020','2021','2022','2023','2024'],datasets:[{label:'Tech Jobs (K)',data:[850,920,1050,1180,1420],borderColor:'#7c6fef',backgroundColor:'rgba(124,111,239,0.08)',tension:0.4,fill:true,pointBackgroundColor:'#7c6fef',pointRadius:5},{label:'AI/ML Jobs',data:[40,80,160,310,580],borderColor:'#2ecc71',backgroundColor:'rgba(46,204,113,0.07)',tension:0.4,fill:true,pointBackgroundColor:'#2ecc71',pointRadius:5}]},options:{...opt}});
+  new Chart(document.getElementById('ch4'),{type:'bar',data:{labels:['Bengaluru','Hyderabad','Mumbai','Pune','Delhi','Chennai','Noida'],datasets:[{label:'Avg CTC ₹LPA',data:[18.2,16.8,15.4,14.1,13.8,13.2,12.6],backgroundColor:['rgba(124,111,239,0.8)','rgba(46,204,113,0.7)','rgba(243,156,18,0.7)','rgba(52,152,219,0.7)','rgba(231,76,60,0.65)','rgba(253,121,168,0.7)','rgba(124,111,239,0.5)'],borderRadius:8,borderSkipped:false}]},options:{...opt,plugins:{legend:{display:false}}}});
+  new Chart(document.getElementById('ch5'),{type:'bar',data:{labels:['GenAI','Rust/Go','FinOps','Cloud Sec','React','Java','COBOL','Flash/AS3'],datasets:[{label:'YoY Change %',data:[67,45,38,35,22,-5,-28,-95],backgroundColor:(ctx)=>ctx.raw>0?'rgba(46,204,113,0.7)':'rgba(231,76,60,0.7)',borderRadius:6}]},options:{...opt,plugins:{legend:{display:false}}}});
+}
+
+// ════════════════════════════════════════════════════════════
+// CHATBOT
+// ════════════════════════════════════════════════════════════
+let chatOpen=false;
+function toggleChat(){chatOpen=!chatOpen;document.getElementById('chatPanel').classList.toggle('on',chatOpen);}
+
+function getChatLangMode(){
+  return document.getElementById('chatLangSel')?.value || 'auto';
+}
+
+function containsHindi(text){
+  return /[\u0900-\u097F]/.test(text);
+}
+
+function looksHindiRomanized(lower){
+  const words = ['kya','kaise','kaunsa','kaunsi','naukri','sarkari','paisa','salary kitni','hindi me','bataye','batao','samjhao'];
+  return words.some(w => lower.includes(w));
+}
+
+function shouldReplyHindi(query){
+  const mode = getChatLangMode();
+  if(mode === 'hi') return true;
+  if(mode === 'en') return false;
+  const lower = query.toLowerCase();
+  return containsHindi(query) || looksHindiRomanized(lower);
+}
+
+function pickLang(enText, hiText, useHindi){
+  return useHindi ? hiText : enText;
+}
+
+function hasAny(lower, keywords){
+  return keywords.some(k => lower.includes(k));
+}
+
+function setChatLang(mode){
+  const sel = document.getElementById('chatLangSel');
+  if(sel) sel.value = mode;
+  updateChatStatus();
+}
+
+function updateChatStatus(){
+  const mode = getChatLangMode();
+  const el = document.getElementById('chatStatus');
+  if(!el) return;
+  if(mode === 'hi') el.textContent = '● Online · हिंदी मोड';
+  else if(mode === 'en') el.textContent = '● Online · English mode';
+  else el.textContent = '● Online · Smart career coach (Auto)';
+}
+
+function handleLanguageCommand(msg){
+  const lower = msg.toLowerCase();
+  if(hasAny(lower, ['hindi', 'hindi me']) || containsHindi(msg)){
+    setChatLang('hi');
+    return '✅ भाषा बदल दी गई है। अब मैं हिंदी में जवाब दूंगा।';
+  }
+  if(hasAny(lower, ['english', 'in english'])){
+    setChatLang('en');
+    return '✅ Language switched. I will reply in English now.';
+  }
+  if(hasAny(lower, ['auto language', 'auto mode'])){
+    setChatLang('auto');
+    return '✅ Language mode set to Auto.';
+  }
+  return null;
+}
+
+async function sendChat(){
+  const inp=document.getElementById('chatIn');
+  const msg=inp.value.trim();if(!msg)return;
+  inp.value=''; appendMsg(msg,'u');
+
+  const langCmdReply = handleLanguageCommand(msg);
+  if(langCmdReply){
+    appendMsg(langCmdReply,'ai');
+    return;
+  }
+
+  const tid=appendMsg('...','ai');
+  const ctx=`You are PathMind AI, India's top career coach. Give concise practical advice. User: ${user?.first||'User'}, Skills: ${user?.skills?.join(',')||'tech'}. Question: ${msg}`;
+  const allowRemote = window.PATHMIND_ENABLE_REMOTE_AI === true;
+
+  if(!allowRemote){
+    updateMsg(tid, chatFallback(msg));
+    return;
+  }
+
+  try{
+    const r=await callAI(ctx);
+    updateMsg(tid,r);
+  }catch(_){
+    updateMsg(tid,chatFallback(msg));
+  }
+}
+
+function chatFallback(q){
+  const l=q.toLowerCase();
+  const hi = shouldReplyHindi(q);
+
+  if(hasAny(l, ['ba llb','ballb','llb','law','legal','clat','judiciary','advocate'])){
+    return pickLang(
+      '⚖️ BA LLB roadmap: 1) Prepare CLAT/AILET (Legal Reasoning, GK, English, Logic), 2) Target NLUs or top private law schools, 3) Build internships from year 1 (district court, law firms, NGOs), 4) Choose track by year 3: corporate law, litigation, judiciary, or legal tech.',
+      '⚖️ BA LLB रोडमैप: 1) CLAT/AILET की तैयारी करें (Legal Reasoning, GK, English, Logic), 2) NLU या अच्छे private law college target करें, 3) 1st year से internship करें (court, law firm, NGO), 4) 3rd year तक track चुनें: corporate law, litigation, judiciary या legal tech।',
+      hi
+    );
+  }
+
+  if(hasAny(l, ['salary','pay','ctc','package','paisa'])){
+    return pickLang(
+      '💰 India tech salary guide: Fresher ₹3-6L, Junior ₹6-12L, Mid ₹12-20L, Senior ₹20-40L. Bengaluru/Hyderabad usually pay highest. Improve package fast by combining one core skill + one high-demand skill (example: Java + Cloud).',
+      '💰 भारत में tech salary: Fresher ₹3-6L, Junior ₹6-12L, Mid ₹12-20L, Senior ₹20-40L. Bengaluru/Hyderabad में pay ज़्यादा होता है। जल्दी growth के लिए 1 core skill + 1 high-demand skill combine करें (जैसे Java + Cloud)।',
+      hi
+    );
+  }
+
+  if(hasAny(l, ['upsc','ias','civil','ssc','ibps','railway','govt','government job','sarkari'])){
+    return pickLang(
+      '🏛️ Govt exam strategy: pick max 2 exams at once, follow PYQs + mocks, and keep a fixed revision cycle. UPSC needs long-term prep; SSC/IBPS can be cracked faster with daily timed practice.',
+      '🏛️ सरकारी exam strategy: एक समय में 2 से ज्यादा exam मत लें, PYQ + mock tests पर focus करें, और fixed revision cycle रखें। UPSC long-term है, SSC/IBPS daily timed practice से जल्दी crack हो सकते हैं।',
+      hi
+    );
+  }
+
+  if(hasAny(l, ['loan','emi','credit','cibil'])){
+    return pickLang(
+      '🏦 Education loan tip: keep CIBIL above 750, compare SBI/HDFC/Axis rates, and keep EMI below ~35% of monthly income. If amount is under ₹7.5L, collateral rules are easier in many cases.',
+      '🏦 Education loan tip: CIBIL 750+ रखें, SBI/HDFC/Axis rates compare करें, और EMI monthly income के ~35% से कम रखें। ₹7.5L से कम amount पर collateral rules कई cases में आसान होते हैं।',
+      hi
+    );
+  }
+
+  if(hasAny(l, ['scholarship','funding','grant'])){
+    return pickLang(
+      '🏅 Start with NSP, PM YASASVI, and state scholarships. Keep Aadhaar, income certificate, and mark sheets ready. Apply early because many portals close once target applications are reached.',
+      '🏅 शुरुआत NSP, PM YASASVI और state scholarships से करें। Aadhaar, income certificate और mark sheets तैयार रखें। जल्दी apply करें क्योंकि कई portals target applications के बाद बंद हो जाते हैं।',
+      hi
+    );
+  }
+
+  if(hasAny(l, ['abroad','germany','canada','usa','uk','study abroad'])){
+    return pickLang(
+      '✈️ For budget-friendly study abroad, Germany is strongest; for PR pathway, Canada is easier; for top research and salaries, USA is strongest. Choose country by budget, visa rules, and target role.',
+      '✈️ Budget-friendly study abroad के लिए Germany अच्छा है; PR pathway के लिए Canada आसान है; top research और salary के लिए USA मजबूत है। Country हमेशा budget, visa rules और target role के हिसाब से चुनें।',
+      hi
+    );
+  }
+
+  if(hasAny(l, ['skill','learn','course','roadmap','career'])){
+    const skillHint = (user?.skills?.length || 0) > 0
+      ? `Your current skills: ${user.skills.join(', ')}.`
+      : 'Add your skills in profile for more personalized plans.';
+
+    return pickLang(
+      `🎯 Best growth plan: pick 1 role, learn 2 core tools + 1 project portfolio + weekly mock interview. ${skillHint}`,
+      `🎯 Best growth plan: 1 role चुनें, 2 core tools सीखें + 1 project portfolio बनाएं + weekly mock interview करें। ${skillHint}`,
+      hi
+    );
+  }
+
+  if(hasAny(l, ['hi','hello','namaste','hey'])){
+    return pickLang(
+      '👋 I can help with career roadmap, BA LLB/CLAT, govt exams, salary planning, loans, scholarships, and study abroad. Tell me your goal and current background.',
+      '👋 मैं career roadmap, BA LLB/CLAT, सरकारी exams, salary planning, loans, scholarships और study abroad में मदद कर सकता हूँ। अपना goal और background लिखें।',
+      hi
+    );
+  }
+
+  return pickLang(
+    '💡 I can help better if you ask specific things like: "BA LLB roadmap", "UPSC plan", "salary after 2 years experience", or "best skills for 2026".',
+    '💡 मैं बेहतर मदद करूँगा अगर आप specific पूछें: "BA LLB roadmap", "UPSC plan", "2 साल experience के बाद salary", या "2026 के best skills"।',
+    hi
+  );
+}
+
+let msgId=0;
+function appendMsg(t,type){const id='m'+(++msgId);const c=document.getElementById('chatMsgs');const d=document.createElement('div');d.id=id;d.className=`cmsg cmsg-${type}`;d.textContent=t;c.appendChild(d);c.scrollTop=c.scrollHeight;return id;}
+function updateMsg(id,t){const el=document.getElementById(id);if(el)el.textContent=t;}
+
+// ════════════════════════════════════════════════════════════
+// UTILS
+// ════════════════════════════════════════════════════════════
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3000);}
+
+// Init sector grid on landing
+renderHomeSectors();
+document.getElementById('chatLangSel')?.addEventListener('change', updateChatStatus);
+updateChatStatus();
+bootstrapSession();
+</script>
+</body>
+</html>
+
+
+

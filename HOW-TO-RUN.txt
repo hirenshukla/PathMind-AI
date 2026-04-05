@@ -1,0 +1,241 @@
+PATHMIND AI — COMPLETE SETUP & RUN GUIDE
+=========================================
+Follow every step carefully. Takes about 15-20 minutes total.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 0: WHAT YOU NEED INSTALLED FIRST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Python 3.11+   → https://python.org/downloads
+2. Node.js 18+    → https://nodejs.org
+3. PostgreSQL 15+ → https://postgresql.org/download
+4. Git            → https://git-scm.com
+
+Check you have them:
+  python --version      (should show 3.11.x)
+  node --version        (should show 18.x or higher)
+  psql --version        (should show 15.x)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 1: EXTRACT THE PROJECT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Unzip the file you downloaded:
+  Right-click PathMind-AI-SaaS-Production.zip → Extract All
+
+You will get a folder called: pathmind-saas
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 2: SETUP POSTGRESQL DATABASE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Open your terminal (Command Prompt on Windows, Terminal on Mac/Linux)
+
+Connect to PostgreSQL:
+  Windows: Open "pgAdmin" app, or run:
+    psql -U postgres
+
+  Mac/Linux:
+    sudo -u postgres psql
+
+Inside psql, run these 3 commands:
+  CREATE DATABASE pathmind_db;
+  CREATE USER pathmind_user WITH PASSWORD 'pathmind123';
+  GRANT ALL PRIVILEGES ON DATABASE pathmind_db TO pathmind_user;
+  \q
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 3: SETUP BACKEND (FastAPI)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Open terminal and go to backend folder:
+  cd pathmind-saas/backend
+
+Create Python virtual environment:
+  Windows:
+    python -m venv venv
+    venv\Scripts\activate
+
+  Mac/Linux:
+    python3 -m venv venv
+    source venv/bin/activate
+
+You should see (venv) in your terminal now.
+
+Install all Python packages:
+  pip install -r requirements.txt
+
+This takes 3-5 minutes. Wait for it to finish.
+
+Install spaCy language model (for resume NLP):
+  python -m spacy download en_core_web_sm
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 4: CREATE ENVIRONMENT FILE (.env)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Inside backend folder, copy the example file:
+  Windows: copy .env.example .env
+  Mac/Linux: cp .env.example .env
+
+Now open .env in Notepad (Windows) or nano/vim (Mac):
+  notepad .env   (Windows)
+  nano .env      (Mac/Linux)
+
+Change these lines:
+
+  DATABASE_URL=postgresql+asyncpg://pathmind_user:pathmind123@localhost:5432/pathmind_db
+
+  JWT_SECRET_KEY=mysecretkey12345pathmind2024abcde
+
+  (Leave other lines as they are for now — they are optional)
+
+Save and close the file.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 5: CREATE DATABASE TABLES AND SEED DATA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Still inside backend folder with venv active:
+  cd ..
+  python database/setup.py
+
+You should see:
+  ✅ All tables created
+  ✅ Seeded 7 job market records
+  ✅ Seeded 6 loan products
+  ✅ Seeded 10 skill taxonomy records
+  ✅ Admin user created
+  ✅ Database setup complete!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 6: START THE BACKEND SERVER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Go back to backend folder:
+  cd backend
+
+Start FastAPI server:
+  uvicorn main:app --reload --port 8000
+
+You should see:
+  INFO: Uvicorn running on http://0.0.0.0:8000
+  INFO: Application startup complete.
+
+Test it — open your browser and go to:
+  http://localhost:8000/health
+  
+You should see: {"status":"healthy","service":"PathMind AI API"}
+
+API Documentation:
+  http://localhost:8000/api/docs
+
+KEEP THIS TERMINAL OPEN! Backend must stay running.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 7: SETUP FRONTEND (Next.js)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Open a NEW terminal window (keep backend running in old one)
+
+Go to frontend folder:
+  cd pathmind-saas/frontend
+
+Install Node.js packages:
+  npm install
+
+This takes 2-3 minutes.
+
+Create frontend environment file:
+  Windows: echo NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1 > .env.local
+  Mac/Linux: echo "NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1" > .env.local
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 8: START THE FRONTEND
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Still in frontend folder:
+  npm run dev
+
+You should see:
+  ▲ Next.js 14.x
+  - Local: http://localhost:3000
+
+Open browser and go to:
+  http://localhost:3000
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 9: USE THE WEBSITE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Option A — Create new account:
+  1. Click "Get Started Free"
+  2. Fill in your details
+  3. Click Create Account
+
+Option B — Use the HTML version directly (easiest):
+  Just open PathMind-AI-V2-Complete.html in your browser!
+  No server needed — it works fully offline.
+
+Admin account (if you need it):
+  Email:    admin@pathmind.ai
+  Password: admin@pathmind2024
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+COMMON ERRORS AND FIXES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ERROR: "psycopg2 not found" or database connection error
+FIX: Make sure PostgreSQL is running
+  Windows: Open Services → Start "postgresql-x64-15"
+  Mac: brew services start postgresql
+  Linux: sudo systemctl start postgresql
+
+ERROR: "Module not found" in Python
+FIX: Make sure venv is active (you see "(venv)" in terminal)
+  Windows: venv\Scripts\activate
+  Mac/Linux: source venv/bin/activate
+
+ERROR: Port 8000 already in use
+FIX: Use different port:
+  uvicorn main:app --reload --port 8001
+  (also update .env.local: NEXT_PUBLIC_API_URL=http://localhost:8001/api/v1)
+
+ERROR: npm install fails
+FIX: Update Node.js to version 18+ from nodejs.org
+
+ERROR: "pip install" fails
+FIX: Upgrade pip first:
+  python -m pip install --upgrade pip
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUICK START SUMMARY (after first setup)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Every time you want to run the project:
+
+Terminal 1 (Backend):
+  cd pathmind-saas/backend
+  source venv/bin/activate   (Mac/Linux)
+  venv\Scripts\activate      (Windows)
+  uvicorn main:app --reload --port 8000
+
+Terminal 2 (Frontend):
+  cd pathmind-saas/frontend
+  npm run dev
+
+Then open: http://localhost:3000
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EASIEST OPTION — NO SETUP NEEDED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If the above feels complex, just use the HTML file:
+
+1. Find file: PathMind-AI-V2-Complete.html
+2. Double-click it
+3. Opens in your browser — fully working!
+
+All features work: Career Predictor, Life Decision AI,
+Loan Predictor, Government Sector, Student Corner, Charts.
+Uses localStorage — no database needed.
